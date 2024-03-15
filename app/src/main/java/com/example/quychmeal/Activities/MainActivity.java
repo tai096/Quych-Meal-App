@@ -1,18 +1,19 @@
-package com.example.quychmeal;
+package com.example.quychmeal.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 
+import com.example.quychmeal.Activities.Fragments.HomeScreenFragment;
+import com.example.quychmeal.Activities.Fragments.OwnScreenFragment;
+import com.example.quychmeal.Activities.Fragments.ProfileScreenFragment;
+import com.example.quychmeal.Activities.Fragments.TodayMenuScreenFragment;
+import com.example.quychmeal.R;
 import com.example.quychmeal.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends RootActivity {
 
     ActivityMainBinding binding;
 
@@ -24,13 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         replaceFragment(new HomeScreenFragment());
         binding.bottomNavigationView.setBackground(null);
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            Window window = this.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(this.getResources().getColor(R.color.black));
-        }
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
