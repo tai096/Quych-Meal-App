@@ -17,12 +17,7 @@ public class SplashActivity extends RootActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                navigateActivity();
-            }
-        }, 2000); // 3000 milliseconds = 3 seconds
+        new Handler().postDelayed(this::navigateActivity, 2000);
     }
 
     private void navigateActivity() {
@@ -30,7 +25,7 @@ public class SplashActivity extends RootActivity {
 
         // check isLogIn???
         if(currentUser == null) {
-            startActivity(new Intent(this, SignUpActivity.class));
+            startActivity(new Intent(this, LogInActivity.class));
         } else {
             startActivity(new Intent(this, MainActivity.class));
         }
