@@ -4,29 +4,43 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.quychmeal.Activities.Fragments.HomeScreenFragment;
 import com.example.quychmeal.Activities.Fragments.OwnScreenFragment;
 import com.example.quychmeal.Activities.Fragments.ProfileScreenFragment;
 import com.example.quychmeal.Activities.Fragments.TodayMenuScreenFragment;
+import com.example.quychmeal.Adapter.CategoriesAdapter;
+import com.example.quychmeal.Models.Category;
 import com.example.quychmeal.R;
 import com.example.quychmeal.databinding.ActivityMainBinding;
+import com.example.quychmeal.databinding.FragmentHomeScreenBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class MainActivity extends RootActivity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class MainActivity extends RootActivity {
     ActivityMainBinding binding;
+    FragmentHomeScreenBinding fragmentHomeScreenBinding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        fragmentHomeScreenBinding = FragmentHomeScreenBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
 
         replaceFragment(new HomeScreenFragment());
@@ -36,7 +50,7 @@ public class MainActivity extends RootActivity {
 
             int itemId = item.getItemId();
 
-            if(itemId == R.id.home){
+            if (itemId == R.id.home) {
                 replaceFragment(new HomeScreenFragment());
             } else if (itemId == R.id.today_menu) {
                 replaceFragment(new TodayMenuScreenFragment());
@@ -50,24 +64,46 @@ public class MainActivity extends RootActivity {
         });
 
 //        getAllDocuments();
+        initCategories();
     }
 
-    private void getAllDocuments() {
-        firestoreDB.collection("foods")
+    private void initCategories() {
+        RecyclerView categoriesRecyclerView = fragmentHomeScreenBinding.categoriesRecyclerView;
+
+        fragmentHomeScreenBinding.progressBarCategoty.setVisibility(View.VISIBLE);
+
+        ArrayList<Category> list = new ArrayList<>();
+
+
+        firestoreDB.collection("categories")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("MyDebug", document.getId() + " => " + document.getData());
+                                Category category = new Category(document.getString("id"), document.getString("name"), document.getString("image"));
+                                list.add(category);
                             }
+
+                            if (!list.isEmpty()) {
+
+                                Log.d("MyDebug", "List: "+ list);
+
+                                categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                                RecyclerView.Adapter adapter = new CategoriesAdapter(list); // Create the adapter
+
+                                categoriesRecyclerView.setAdapter(adapter); // Attach the adapter here
+                            }
+                            fragmentHomeScreenBinding.progressBarCategoty.setVisibility(View.GONE);
+
                         } else {
                             Log.d("MyDebug", "Error getting documents: ", task.getException());
                         }
                     }
                 });
     }
+
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
