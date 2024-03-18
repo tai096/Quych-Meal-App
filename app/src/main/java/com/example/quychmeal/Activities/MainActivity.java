@@ -1,10 +1,12 @@
 package com.example.quychmeal.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.quychmeal.Activities.Fragments.HomeScreenFragment;
 import com.example.quychmeal.Activities.Fragments.OwnScreenFragment;
@@ -12,6 +14,10 @@ import com.example.quychmeal.Activities.Fragments.ProfileScreenFragment;
 import com.example.quychmeal.Activities.Fragments.TodayMenuScreenFragment;
 import com.example.quychmeal.R;
 import com.example.quychmeal.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends RootActivity {
 
@@ -42,6 +48,25 @@ public class MainActivity extends RootActivity {
 
             return true;
         });
+
+//        getAllDocuments();
+    }
+
+    private void getAllDocuments() {
+        firestoreDB.collection("foods")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("MyDebug", document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d("MyDebug", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     private void replaceFragment(Fragment fragment) {
