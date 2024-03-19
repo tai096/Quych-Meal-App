@@ -18,43 +18,46 @@ import com.example.quychmeal.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.viewholder> {
-    ArrayList<Category> categories;
-    Context context;
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 
-    public CategoriesAdapter(ArrayList<Category> categories) {
-        this.categories = categories;
+    public Context context;
+    public List<Category> categoryList;
+
+    public CategoriesAdapter(Context context, List<Category> categoryList) {
+        this.context = context;
+        this.categoryList = categoryList;
     }
 
     @NonNull
     @Override
-    public CategoriesAdapter.viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_categories, parent, false);
-        return new viewholder(inflate);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_categories, parent, false);
+        return new CategoriesAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoriesAdapter.viewholder holder, int position) {
-        holder.categoryName.setText(categories.get(position).getName());
-        Glide.with(context).load(categories.get(position).getImage()).transform(new CenterCrop(), new RoundedCorners(30)).into(holder.categoryImg);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Category category = categoryList.get(position);
+        Glide.with(context).load(category.getImage()).into(holder.categoryImg);
+        holder.categoryName.setText(category.getName());
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return categoryList.size();
     }
 
-    public class viewholder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView categoryName;
         ImageView categoryImg;
 
-        public viewholder(@NonNull View itemView) {
-            super(itemView);
 
-            categoryName = itemView.findViewById(R.id.categoryName);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
             categoryImg = itemView.findViewById(R.id.categoryImg);
+            categoryName = itemView.findViewById(R.id.categoryName);
         }
     }
 }

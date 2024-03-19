@@ -1,24 +1,24 @@
 package com.example.quychmeal.Models;
 
 public class Category {
-    private String id;
+    private int id;
     private String name;
     private String image;
 
     public Category() {
     }
 
-    public Category(String id, String name, String image) {
+    public Category(int id, String name, String image) {
         this.id = id;
         this.name = name;
         this.image = image;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

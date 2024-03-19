@@ -2,65 +2,76 @@ package com.example.quychmeal.Activities.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import com.example.quychmeal.Adapter.CategoriesAdapter;
+import com.example.quychmeal.Models.Category;
 import com.example.quychmeal.R;
+import com.example.quychmeal.databinding.FragmentHomeScreenBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeScreenFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeScreenFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomeScreenFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeScreenFragment newInstance(String param1, String param2) {
-        HomeScreenFragment fragment = new HomeScreenFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private RecyclerView recyclerView;
+    private CategoriesAdapter categoriesAdapter;
+    private List<Category> categoryList;
+    private ProgressBar progressBarCategory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_screen, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
+
+        recyclerView = view.findViewById(R.id.categoriesRecyclerView);
+        progressBarCategory = view.findViewById(R.id.progressBarCategoty);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
+        progressBarCategory.setVisibility(View.VISIBLE);
+
+        categoryList = new ArrayList<>();
+        categoriesAdapter = new CategoriesAdapter(getContext(), categoryList);
+        recyclerView.setAdapter(categoriesAdapter);
+
+        getCategories();
+        return view;
+    }
+
+    private void getCategories() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("categories");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                categoryList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Category category = dataSnapshot.getValue(Category.class);
+                    categoryList.add(category);
+                }
+
+                categoriesAdapter.notifyDataSetChanged();
+                progressBarCategory.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

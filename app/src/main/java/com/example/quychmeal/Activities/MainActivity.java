@@ -24,6 +24,11 @@ import com.example.quychmeal.databinding.ActivityMainBinding;
 import com.example.quychmeal.databinding.FragmentHomeScreenBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -32,14 +37,11 @@ import java.util.List;
 
 public class MainActivity extends RootActivity {
     ActivityMainBinding binding;
-    FragmentHomeScreenBinding fragmentHomeScreenBinding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        fragmentHomeScreenBinding = FragmentHomeScreenBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
 
@@ -64,45 +66,9 @@ public class MainActivity extends RootActivity {
         });
 
 //        getAllDocuments();
-        initCategories();
     }
 
-    private void initCategories() {
-        RecyclerView categoriesRecyclerView = fragmentHomeScreenBinding.categoriesRecyclerView;
 
-        fragmentHomeScreenBinding.progressBarCategoty.setVisibility(View.VISIBLE);
-
-        ArrayList<Category> list = new ArrayList<>();
-
-
-        firestoreDB.collection("categories")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Category category = new Category(document.getString("id"), document.getString("name"), document.getString("image"));
-                                list.add(category);
-                            }
-
-                            if (!list.isEmpty()) {
-
-                                Log.d("MyDebug", "List: "+ list);
-
-                                categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                                RecyclerView.Adapter adapter = new CategoriesAdapter(list); // Create the adapter
-
-                                categoriesRecyclerView.setAdapter(adapter); // Attach the adapter here
-                            }
-                            fragmentHomeScreenBinding.progressBarCategoty.setVisibility(View.GONE);
-
-                        } else {
-                            Log.d("MyDebug", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
 
 
     private void replaceFragment(Fragment fragment) {
