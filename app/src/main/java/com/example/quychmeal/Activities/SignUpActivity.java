@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class SignUpActivity extends RootActivity {
     ActivitySignUpBinding binding;
     String uniqueID = UUID.randomUUID().toString();
     String defaultAvatar = "https://www.zooniverse.org/assets/simple-avatar.png";
+    DatabaseReference databaseReference = realtimeDB.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +65,11 @@ public class SignUpActivity extends RootActivity {
 
                     User user = new User(userId, email, username, password, Integer.parseInt(age), sex, defaultAvatar);
 
-                    firestoreDB.collection("users").document(userId)
-                            .set(user)
-                            .addOnSuccessListener(aVoid -> Log.d("MyDebug", "DocumentSnapshot successfully written!"))
-                            .addOnFailureListener(e -> Log.e("MyDebug", "Error writing document", e));
+                    databaseReference.child("users").child(userId).setValue(user);
+//                    firestoreDB.collection("users").document(userId)
+//                            .set(user)
+//                            .addOnSuccessListener(aVoid -> Log.d("MyDebug", "DocumentSnapshot successfully written!"))
+//                            .addOnFailureListener(e -> Log.e("MyDebug", "Error writing document", e));
 
 
                     Toast.makeText(SignUpActivity.this, "Welcome To Quych Meal!", Toast.LENGTH_LONG).show();
