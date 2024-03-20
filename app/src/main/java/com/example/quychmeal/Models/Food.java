@@ -6,7 +6,7 @@ public class Food {
     private int id;
     private int categoryId;
     private int cookTime;
-    private int createdBy;
+    private String createdBy;
     private String description;
     private String image;
     private List<FoodIngredient> ingredients;
@@ -19,7 +19,7 @@ public class Food {
 
     public Food() {
     }
-    public Food(int id, int categoryId, int cookTime, int createdBy, String description, String image, List<FoodIngredient> ingredients, int level, String method, String name, int prepTime, int serving, String video) {
+    public Food(int id, int categoryId, int cookTime, String createdBy, String description, String image, List<FoodIngredient> ingredients, int level, String method, String name, int prepTime, int serving, String video) {
         this.id = id;
         this.categoryId = categoryId;
         this.cookTime = cookTime;
@@ -59,11 +59,11 @@ public class Food {
         this.cookTime = cookTime;
     }
 
-    public int getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,8 @@ public class HomeScreenFragment extends Fragment implements CategoriesAdapter.Ca
     private List<Food> foodList;
     private ProgressBar progressBarCategory;
     private ProgressBar progressBarFood;
+    private SearchView searchView;
+
     @Override
     public void onCategoryClick(Category category) {
         getFoods(category.getId());
@@ -48,6 +51,20 @@ public class HomeScreenFragment extends Fragment implements CategoriesAdapter.Ca
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
+
+        searchView = view.findViewById(R.id.searchFoodView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         // Categories ////////////////
         RecyclerView recyclerViewCategory = view.findViewById(R.id.categoriesRecyclerView);
@@ -78,6 +95,10 @@ public class HomeScreenFragment extends Fragment implements CategoriesAdapter.Ca
 
         ///////////////////////////////////////
         return view;
+    }
+
+    private void handleSearch(String searchTxt) {
+
     }
 
     private void getCategories() {

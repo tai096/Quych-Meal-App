@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class SignUpActivity extends RootActivity {
     ActivitySignUpBinding binding;
     String uniqueID = UUID.randomUUID().toString();
     String defaultAvatar = "https://www.zooniverse.org/assets/simple-avatar.png";
-    DatabaseReference databaseReference = realtimeDB.getReference();
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class SignUpActivity extends RootActivity {
 
                     User user = new User(userId, email, username, password, Integer.parseInt(age), sex, defaultAvatar);
 
-                    databaseReference.child("users").child(userId).setValue(user);
+                    reference.child(userId).setValue(user);
 
                     Toast.makeText(SignUpActivity.this, "Welcome To Quych Meal!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
