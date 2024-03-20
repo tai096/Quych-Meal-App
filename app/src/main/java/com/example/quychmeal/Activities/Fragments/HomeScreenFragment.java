@@ -25,18 +25,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeScreenFragment extends Fragment {
+public class HomeScreenFragment extends Fragment implements CategoriesAdapter.CategoryClickListener {
     private CategoriesAdapter categoriesAdapter;
     private FoodsAdapter foodsAdapter;
     private List<Category> categoryList;
     private List<Food> foodList;
     private ProgressBar progressBarCategory;
     private ProgressBar progressBarFood;
+    @Override
+    public void onCategoryClick(Category category) {
+        getFoods(category.getId());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +57,7 @@ public class HomeScreenFragment extends Fragment {
         progressBarCategory.setVisibility(View.VISIBLE);
 
         categoryList = new ArrayList<>();
-        categoriesAdapter = new CategoriesAdapter(getContext(), categoryList);
+        categoriesAdapter = new CategoriesAdapter(getContext(), categoryList, this);
         recyclerViewCategory.setAdapter(categoriesAdapter);
 
         getCategories();
@@ -69,7 +74,8 @@ public class HomeScreenFragment extends Fragment {
         foodsAdapter = new FoodsAdapter(getContext(), foodList);
         recyclerViewFood.setAdapter(foodsAdapter);
 
-        getFoods();
+        getFoods(0);
+
         ///////////////////////////////////////
         return view;
     }
@@ -97,9 +103,10 @@ public class HomeScreenFragment extends Fragment {
         });
     }
 
-    private void getFoods() {
+    private void getFoods(int categoryId) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("foods");
-        reference.addValueEventListener(new ValueEventListener() {
+        Query query = reference.orderByChild("categoryId").equalTo(categoryId);
+        query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,8 +122,10 @@ public class HomeScreenFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Handle onCancelled
             }
         });
     }
+
+
 }

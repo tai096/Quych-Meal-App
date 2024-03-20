@@ -66,11 +66,6 @@ public class SignUpActivity extends RootActivity {
                     User user = new User(userId, email, username, password, Integer.parseInt(age), sex, defaultAvatar);
 
                     databaseReference.child("users").child(userId).setValue(user);
-//                    firestoreDB.collection("users").document(userId)
-//                            .set(user)
-//                            .addOnSuccessListener(aVoid -> Log.d("MyDebug", "DocumentSnapshot successfully written!"))
-//                            .addOnFailureListener(e -> Log.e("MyDebug", "Error writing document", e));
-
 
                     Toast.makeText(SignUpActivity.this, "Welcome To Quych Meal!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));

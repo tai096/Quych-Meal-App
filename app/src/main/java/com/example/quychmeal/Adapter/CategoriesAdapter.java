@@ -13,19 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.quychmeal.Activities.Fragments.HomeScreenFragment;
 import com.example.quychmeal.Models.Category;
 import com.example.quychmeal.R;
 
 import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
+    public interface CategoryClickListener {
+        void onCategoryClick(Category category);
+    }
 
     public Context context;
     public List<Category> categoryList;
+    private CategoryClickListener listener;
 
-    public CategoriesAdapter(Context context, List<Category> categoryList) {
+    public CategoriesAdapter(Context context, List<Category> categoryList, CategoryClickListener listener) {
         this.context = context;
         this.categoryList = categoryList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -38,6 +44,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Category category = categoryList.get(position);
+        holder.itemView.setOnClickListener(v -> listener.onCategoryClick(category));
         Glide.with(context).load(category.getImage()).into(holder.categoryImg);
         holder.categoryName.setText(category.getName());
     }

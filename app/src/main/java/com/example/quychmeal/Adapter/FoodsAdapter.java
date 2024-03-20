@@ -46,9 +46,18 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         holder.foodPrepTime.setText(food.getPrepTime());
     }
 
+    public void setFoodList(List<Food> foodList) {
+        this.foodList = foodList;
+    }
+
     @Override
     public int getItemCount() {
         return foodList.size();
+    }
+
+    public void filterList(List<Food> filteredList) {
+        foodList = filteredList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
