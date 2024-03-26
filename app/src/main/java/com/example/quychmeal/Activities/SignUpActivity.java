@@ -5,7 +5,9 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -32,7 +34,6 @@ public class SignUpActivity extends RootActivity {
     String uniqueID = UUID.randomUUID().toString();
     String defaultAvatar = "https://www.zooniverse.org/assets/simple-avatar.png";
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,11 @@ public class SignUpActivity extends RootActivity {
                     User user = new User(userId, email, username, password, Integer.parseInt(age), sex, defaultAvatar);
 
                     reference.child(userId).setValue(user);
+
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("userId", userId);
+                    editor.putString("username", username);
+                    editor.apply();
 
                     Toast.makeText(SignUpActivity.this, "Welcome To Quych Meal!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));

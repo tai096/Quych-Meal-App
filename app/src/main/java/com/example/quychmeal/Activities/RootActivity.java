@@ -2,7 +2,9 @@ package com.example.quychmeal.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
@@ -17,6 +19,8 @@ public class RootActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase realtimeDB;
     FirebaseFirestore firestoreDB;
+    SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +30,7 @@ public class RootActivity extends AppCompatActivity {
         firestoreDB = FirebaseFirestore.getInstance();
         realtimeDB = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        pref = getPreferences(MODE_PRIVATE);
     }
 
 }

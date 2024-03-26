@@ -3,6 +3,7 @@ package com.example.quychmeal.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.example.quychmeal.Models.User;
 import com.example.quychmeal.R;
 import com.example.quychmeal.databinding.ActivityLogInBinding;
 import com.example.quychmeal.databinding.ActivitySignUpBinding;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LogInActivity extends RootActivity {
     ActivityLogInBinding binding;
@@ -43,9 +45,19 @@ public class LogInActivity extends RootActivity {
 
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LogInActivity.this, task -> {
                 if (task.isSuccessful()){
-                    Toast.makeText(LogInActivity.this, "Welcome To Quych Meal!", Toast.LENGTH_LONG).show();
+                    FirebaseUser user = mAuth.getCurrentUser();
 
-                    startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                    if (user != null) {
+                        pref.edit().putString("userId", user.getUid()).apply();
+
+                        Toast.makeText(LogInActivity.this, "Welcome To Quych Meal!", Toast.LENGTH_LONG).show();
+
+                        startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                    } else {
+                        return;
+                    }
+
+
                 }else {
                     String error = task.getException().getMessage();
 

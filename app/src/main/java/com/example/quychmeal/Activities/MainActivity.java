@@ -12,6 +12,7 @@ import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.quychmeal.Activities.Fragments.HomeScreenFragment;
 import com.example.quychmeal.Activities.Fragments.OwnScreenFragment;
@@ -65,6 +66,10 @@ public class MainActivity extends RootActivity {
             return true;
         });
 
+        String currentUserId = pref.getString("userId", "");
+
+        Log.d("debug", "Pref"+ currentUserId);
+        Toast.makeText(this, currentUserId, Toast.LENGTH_LONG).show();
 //        getAllDocuments();
     }
 

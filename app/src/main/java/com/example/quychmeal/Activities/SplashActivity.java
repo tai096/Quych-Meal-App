@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.quychmeal.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,10 +22,11 @@ public class SplashActivity extends RootActivity {
     }
 
     private void navigateActivity() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = pref.getString("userId", "");
 
+        Log.d("debug", "Pref"+ currentUserId);
         // check isLogIn???
-        if(currentUser == null) {
+        if(currentUserId.isEmpty()) {
             startActivity(new Intent(this, LogInActivity.class));
         } else {
             startActivity(new Intent(this, MainActivity.class));
