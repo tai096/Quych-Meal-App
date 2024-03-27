@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -38,7 +39,8 @@ import java.util.List;
 
 public class MainActivity extends RootActivity {
     ActivityMainBinding binding;
-
+    SharedPreferences pref;
+    private static final String SHARED_PREF_NAME = "mypref";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,9 @@ public class MainActivity extends RootActivity {
         setContentView(binding.getRoot());
 
         replaceFragment(new HomeScreenFragment());
+
+        pref = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+
         binding.bottomNavigationView.setBackground(null);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -68,13 +73,9 @@ public class MainActivity extends RootActivity {
 
         String currentUserId = pref.getString("userId", "");
 
-        Log.d("debug", "Pref"+ currentUserId);
         Toast.makeText(this, currentUserId, Toast.LENGTH_LONG).show();
 //        getAllDocuments();
     }
-
-
-
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

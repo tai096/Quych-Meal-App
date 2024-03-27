@@ -19,7 +19,7 @@ public class RootActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase realtimeDB;
     FirebaseFirestore firestoreDB;
-    SharedPreferences pref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,6 @@ public class RootActivity extends AppCompatActivity {
         firestoreDB = FirebaseFirestore.getInstance();
         realtimeDB = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        pref = getPreferences(MODE_PRIVATE);
     }
 
 }

@@ -16,11 +16,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LogInActivity extends RootActivity {
     ActivityLogInBinding binding;
+    SharedPreferences pref;
+    private static final String SHARED_PREF_NAME = "mypref";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLogInBinding.inflate(getLayoutInflater());
+
+        pref = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
         setContentView(binding.getRoot());
         setVariable();
@@ -48,7 +52,9 @@ public class LogInActivity extends RootActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
 
                     if (user != null) {
-                        pref.edit().putString("userId", user.getUid()).apply();
+                        SharedPreferences.Editor editor = pref.edit();
+
+                        editor.putString("userId", user.getUid()).apply();
 
                         Toast.makeText(LogInActivity.this, "Welcome To Quych Meal!", Toast.LENGTH_LONG).show();
 

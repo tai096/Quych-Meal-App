@@ -34,10 +34,15 @@ public class SignUpActivity extends RootActivity {
     String uniqueID = UUID.randomUUID().toString();
     String defaultAvatar = "https://www.zooniverse.org/assets/simple-avatar.png";
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+    SharedPreferences pref;
+    private static final String SHARED_PREF_NAME = "mypref";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
+
+        pref = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
         setContentView(binding.getRoot());
         setVariable();
