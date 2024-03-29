@@ -5,6 +5,5 @@
          <item name="colorPrimary">@color/primary</item>
         <item name="fontFamily">@font/quicksand_font</item>
     </style>
-
     <style name="Theme.QuychMeal" parent="Base.Theme.QuychMeal" />
 </resources>

@@ -4,4 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#F99B16</color>
     <color name="secondary">#B2B2B2</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="hover">#37484848</color>
+
 </resources>
