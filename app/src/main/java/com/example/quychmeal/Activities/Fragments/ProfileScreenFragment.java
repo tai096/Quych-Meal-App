@@ -41,12 +41,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 
 public class ProfileScreenFragment extends Fragment {
-    private TextView nameLabel;
+    private TextView nameLabel, txtPostsCount;
     private ImageView avatarImageView;
     SharedPreferences pref;
     private static final String SHARED_PREF_NAME = "mypref";
     private ConstraintLayout constraintLayoutEdit, constraintLayoutSetting, constraintLayoutFeedback;
-    private int originalBackgroundColor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class ProfileScreenFragment extends Fragment {
         pref = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         nameLabel = view.findViewById(R.id.nameLabel);
+        txtPostsCount = view.findViewById(R.id.txtPostsCount);
         constraintLayoutEdit= view.findViewById(R.id.constraintLayoutEdit);
         constraintLayoutSetting= view.findViewById(R.id.constraintLayoutSetting);
         constraintLayoutFeedback= view.findViewById(R.id.constraintLayoutFeedback);
@@ -95,9 +96,26 @@ public class ProfileScreenFragment extends Fragment {
         String currentUserId = pref.getString("userId", null);
 
         assert currentUserId != null;
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(currentUserId);
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("users").child(currentUserId);
+        DatabaseReference foodsReference = FirebaseDatabase.getInstance().getReference("foods");
 
-        reference.addValueEventListener(new ValueEventListener() {
+        foodsReference.orderByChild("createdBy").equalTo(currentUserId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String foodCount = String.valueOf(dataSnapshot.getChildrenCount());
+
+                        txtPostsCount.setText(foodCount);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Handle any errors
+                        System.out.println("Database Error: " + databaseError.getMessage());
+                    }
+                });
+
+        userReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
