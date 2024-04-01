@@ -11,4 +11,10 @@
         <item>other</item>
     </string-array>
 
+    <string-array name="languages_options">
+        <item>Vietnamese</item>
+        <item>English</item>
+        <item>Japanese</item>
+    </string-array>
+
 </resources>
