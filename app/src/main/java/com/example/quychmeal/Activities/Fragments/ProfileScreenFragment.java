@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -46,6 +47,20 @@ public class ProfileScreenFragment extends Fragment {
     SharedPreferences pref;
     private static final String SHARED_PREF_NAME = "mypref";
     private ConstraintLayout constraintLayoutEdit, constraintLayoutSetting, constraintLayoutFeedback;
+
+    private Context mContext; // Add a context variable
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,8 +138,8 @@ public class ProfileScreenFragment extends Fragment {
 
                 nameLabel.setText(userProfile.getUsername());
                 String profileImageUrl = userProfile.getAvatar();
-                if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-                    Glide.with(requireContext())
+                if (profileImageUrl != null && !profileImageUrl.isEmpty() && mContext != null) {
+                    Glide.with(mContext)
                             .load(profileImageUrl)
                             .into(avatarImageView);
                 }

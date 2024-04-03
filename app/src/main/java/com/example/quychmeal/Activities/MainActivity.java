@@ -48,8 +48,6 @@ public class MainActivity extends RootActivity {
 
         setContentView(binding.getRoot());
 
-        replaceFragment(new HomeScreenFragment());
-
         pref = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
         binding.bottomNavigationView.setBackground(null);
@@ -71,10 +69,10 @@ public class MainActivity extends RootActivity {
             return true;
         });
 
-        String currentUserId = pref.getString("userId", "");
-
-        Toast.makeText(this, currentUserId, Toast.LENGTH_LONG).show();
-//        getAllDocuments();
+        // Only add the initial fragment if it's the first creation of the activity
+        if (savedInstanceState == null) {
+            replaceFragment(new HomeScreenFragment());
+        }
     }
 
     private void replaceFragment(Fragment fragment) {
