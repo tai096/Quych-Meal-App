@@ -7,4 +7,65 @@
     android:layout_height="match_parent"
     tools:context=".Activities.FeedbackActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnFbGoBack"
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            android:background="@color/transparent"
+            android:padding="20dp"
+            android:rotation="180"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_arrow" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feedback"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/editTxtFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/custom_button"
+        android:gravity="top"
+        android:hint="Give us your feedback"
+        android:inputType="text|textMultiLine"
+        android:lines="6"
+        android:maxLines="6"
+        android:maxWidth="500dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+
+    <Button
+        android:id="@+id/btnSendFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:drawableEnd="@android:drawable/ic_menu_send"
+        android:text="Send"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTxtFeedback" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
