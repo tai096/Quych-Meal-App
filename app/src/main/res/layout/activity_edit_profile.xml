@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/ScreenQuychMeal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Activities.EditProfileActivity">
 
     <ImageButton
         android:id="@+id/imageBtnGoBack"
+        style="@style/IconQuychMeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
@@ -19,121 +21,129 @@
         app:srcCompat="@drawable/ic_arrow"
         tools:ignore="MissingConstraints" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout5"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageBtnGoBack">
 
-        <ImageView
-            android:id="@+id/avatarView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@drawable/background_food" />
-
         <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:maxWidth="400dp"
-            android:minWidth="300dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView5"
+            <ImageView
+                android:id="@+id/avatarView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@drawable/background_food" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="Username"
-                android:textStyle="bold" />
+                android:layout_marginTop="50dp"
+                android:maxWidth="400dp"
+                android:minWidth="300dp"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editProfileName"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Username"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editProfileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:text="Name" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:maxWidth="400dp"
+                android:minWidth="300dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Sex"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerSex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button"
+                    android:entries="@array/sex_options"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:maxWidth="400dp"
+                android:minWidth="300dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Age"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editProfileAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button"
-                android:ems="10"
-                android:inputType="text"
-                android:padding="10dp"
-                android:text="Name" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:maxWidth="400dp"
-            android:minWidth="300dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="Sex"
+                android:drawableEnd="@drawable/ic_save"
+                android:layout_marginVertical="30dp"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerSex"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_button"
-                android:entries="@array/sex_options"
-                android:padding="10dp" />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:maxWidth="400dp"
-            android:minWidth="300dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="Age"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editProfileAge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_button"
-                android:ems="10"
-                android:inputType="number"
-                android:padding="10dp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/custom_button"
-        android:drawableEnd="@drawable/ic_save"
-        android:text="Save"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,4 +6,10 @@
         <item name="fontFamily">@font/quicksand_font</item>
     </style>
     <style name="Theme.QuychMeal" parent="Base.Theme.QuychMeal" />
+
+    <style name="ScreenQuychMeal"><item name="android:background">@color/white</item></style>
+    <style name="TextQuychMeal"><item name="android:textColor">@color/darkMode</item></style>
+    <style name="IconQuychMeal"><item name="android:tint">@color/darkMode</item></style>
+
+
 </resources>

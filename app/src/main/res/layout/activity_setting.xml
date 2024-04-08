@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/ScreenQuychMeal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.SettingActivity">
@@ -19,20 +20,21 @@
 
         <ImageButton
             android:id="@+id/btnSettingGoBack"
+            style="@style/IconQuychMeal"
             android:layout_width="50dp"
             android:layout_height="55dp"
+            android:background="@color/transparent"
             android:padding="20dp"
             android:rotation="180"
-            android:background="@color/transparent"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_arrow" />
 
         <TextView
             android:id="@+id/textView4"
+            style="@style/TextQuychMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Settings"
-            android:textColor="#1D1B20"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -41,8 +43,8 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:background="@color/hover"
         android:maxWidth="500dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,8 +64,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view">
 
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch1"
+            style="@style/TextQuychMeal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -84,8 +87,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
-        <Switch
-            android:id="@+id/switch2"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swichTheme"
+            style="@style/TextQuychMeal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -109,19 +113,22 @@
 
         <TextView
             android:id="@+id/textView9"
+            style="@style/TextQuychMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="Language"
-            android:textColor="#1D1B20"
             android:textFontWeight="500"
             android:textSize="18sp" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
         <Spinner
             android:id="@+id/spinner"
+            style="@style/TextQuychMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/languages_options"

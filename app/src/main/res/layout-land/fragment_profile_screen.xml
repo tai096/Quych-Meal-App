@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/ScreenQuychMeal"
     android:layout_gravity="center_vertical"
     tools:context=".Activities.Fragments.ProfileScreenFragment">
 
@@ -43,13 +44,13 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                style="@style/TextQuychMeal"
                 android:id="@+id/nameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="50dp"
                 android:text="Name"
-                android:textColor="@color/black"
                 android:textFontWeight="600"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayoutSetting"
@@ -72,12 +73,12 @@
 
 
             <TextView
+                style="@style/TextQuychMeal"
                 android:id="@+id/postsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
                 android:text="Posts"
-                android:textColor="@color/black"
                 android:textFontWeight="500"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayoutFeedback"
@@ -93,6 +94,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    style="@style/IconQuychMeal"
                     android:id="@+id/imageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,6 +104,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    style="@style/TextQuychMeal"
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,7 +112,6 @@
                     android:maxWidth="400dp"
                     android:minWidth="300dp"
                     android:text="Edit profile"
-                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -117,6 +119,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    style="@style/IconQuychMeal"
                     android:id="@+id/imageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -137,6 +140,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayoutEdit">
 
                 <ImageView
+                    style="@style/IconQuychMeal"
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,6 +150,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    style="@style/TextQuychMeal"
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,7 +158,6 @@
                     android:maxWidth="400dp"
                     android:minWidth="300dp"
                     android:text="Settings"
-                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -161,6 +165,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    style="@style/IconQuychMeal"
                     android:id="@+id/imageView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -180,6 +185,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSetting">
 
                 <ImageView
+                    style="@style/IconQuychMeal"
                     android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -189,6 +195,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    style="@style/TextQuychMeal"
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,7 +203,6 @@
                     android:maxWidth="400dp"
                     android:minWidth="300dp"
                     android:text="Send feedback"
-                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -204,6 +210,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    style="@style/IconQuychMeal"
                     android:id="@+id/imageView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -214,6 +221,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
+                style="@style/TextQuychMeal"
                 android:id="@+id/btnLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -222,7 +230,6 @@
                 android:maxWidth="400dp"
                 android:minWidth="350dp"
                 android:text="Log out"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:backgroundTint="@null"

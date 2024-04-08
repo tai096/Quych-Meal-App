@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/ScreenQuychMeal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.EditProfileActivity">
 
     <ImageButton
         android:id="@+id/imageBtnGoBack"
+        style="@style/IconQuychMeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
@@ -21,13 +23,14 @@
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/custom_button"
         android:drawableEnd="@drawable/ic_save"
         android:text="Save"
+        android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,6 +69,7 @@
 
                 <TextView
                     android:id="@+id/textView5"
+                    style="@style/TextQuychMeal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
@@ -95,6 +99,7 @@
 
                 <TextView
                     android:id="@+id/textView6"
+                    style="@style/TextQuychMeal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
@@ -122,6 +127,7 @@
 
                 <TextView
                     android:id="@+id/textView7"
+                    style="@style/TextQuychMeal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="2dp"

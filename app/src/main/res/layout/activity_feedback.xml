@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/ScreenQuychMeal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.FeedbackActivity">
@@ -18,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            style="@style/IconQuychMeal"
             android:id="@+id/btnFbGoBack"
             android:layout_width="50dp"
             android:layout_height="55dp"
@@ -28,6 +30,7 @@
             app:srcCompat="@drawable/ic_arrow" />
 
         <TextView
+            style="@style/TextQuychMeal"
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +65,8 @@
         android:layout_marginTop="32dp"
         android:drawableEnd="@android:drawable/ic_menu_send"
         android:text="Send"
-        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

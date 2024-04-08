@@ -2,8 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.QuychMeal" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
         <item name="fontFamily">@font/quicksand_font</item>
 
     </style>
+
+    <style name="ScreenQuychMeal"><item name="android:background">@color/darkMode</item></style>
+    <style name="TextQuychMeal"><item name="android:textColor">@color/white</item></style>
+    <style name="IconQuychMeal"><item name="android:tint">@color/white</item></style>
+
 </resources>
