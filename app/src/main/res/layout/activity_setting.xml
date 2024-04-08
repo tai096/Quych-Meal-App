@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view">
 
-        <androidx.appcompat.widget.SwitchCompat
+        <Switch
             android:id="@+id/switch1"
             style="@style/TextQuychMeal"
             android:layout_width="0dp"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
-        <androidx.appcompat.widget.SwitchCompat
+        <Switch
             android:id="@+id/swichTheme"
             style="@style/TextQuychMeal"
             android:layout_width="0dp"
@@ -118,7 +118,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="Language"
-            android:textFontWeight="500"
             android:textSize="18sp" />
 
         <View
@@ -127,7 +126,7 @@
             android:layout_weight="1" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/languageSpinner"
             style="@style/TextQuychMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

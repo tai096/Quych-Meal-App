@@ -3,6 +3,7 @@
     <style name="Base.Theme.QuychMeal" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryInverse">@color/hover</item>
         <item name="fontFamily">@font/quicksand_font</item>
 
     </style>

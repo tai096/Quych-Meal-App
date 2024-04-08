@@ -19,7 +19,7 @@ import com.example.quychmeal.R;
 
 public class SettingActivity extends RootActivity {
     private ImageButton btnSettingGoBack;
-    private SwitchCompat swichTheme;
+    private Switch switchTheme;
     private boolean darkMode;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -33,17 +33,17 @@ public class SettingActivity extends RootActivity {
         setContentView(R.layout.activity_setting);
 
         btnSettingGoBack = findViewById(R.id.btnSettingGoBack);
-        swichTheme = findViewById(R.id.swichTheme);
+        switchTheme = findViewById(R.id.swichTheme);
 
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
         darkMode = sharedPreferences.getBoolean("darkMode", false);
 
         if (darkMode) {
-            swichTheme.setChecked(true);
+            switchTheme.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        swichTheme.setOnClickListener(view -> {
+        switchTheme.setOnClickListener(view -> {
             if (darkMode) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 editor = sharedPreferences.edit();
