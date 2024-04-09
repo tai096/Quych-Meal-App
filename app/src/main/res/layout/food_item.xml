@@ -106,7 +106,34 @@
                     android:layout_weight="1"
                     android:text="20m" />
             </LinearLayout>
-
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/foodLevel"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/nunito_bold"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:layout_marginStart="12sp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentStart="true"/>
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="125sp"
+            android:layout_height="wrap_content"
+            android:text="Check"
+            android:fontFamily="@font/nunito_bold"
+            android:textStyle="bold"
+            android:drawableEnd="@drawable/ic_arrow_forward"
+            android:drawableTint="@color/white"
+            android:layout_alignParentEnd="true" />
+        </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
