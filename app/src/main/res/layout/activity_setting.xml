@@ -34,7 +34,7 @@
             style="@style/TextQuychMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -70,8 +70,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Notification"
-            android:textSize="18sp" />
+            android:text="@string/notification"
+            android:textSize="18sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 
     <LinearLayout
@@ -93,8 +94,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Dark Mode"
-            android:textSize="18sp" />
+            android:text="@string/dark_mode"
+            android:textSize="18sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 
     <LinearLayout
@@ -117,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Language"
+            android:text="@string/language"
             android:textSize="18sp" />
 
         <View
@@ -130,7 +132,6 @@
             style="@style/TextQuychMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/languages_options"
             android:padding="10dp" />
     </LinearLayout>
 

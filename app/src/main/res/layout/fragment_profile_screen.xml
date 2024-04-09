@@ -76,39 +76,41 @@
             app:layout_constraintTop_toBottomOf="@+id/txtPostsCount" />
 
         <View
+            android:id="@+id/view2"
             android:layout_width="350dp"
             android:layout_height="0.5dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
             android:background="@color/hover"
             android:maxWidth="400dp"
             android:minWidth="200dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayoutEdit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postsLabel" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:paddingVertical="10dp"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postsLabel">
+            app:layout_constraintTop_toBottomOf="@+id/view2">
 
             <ImageView
                 android:id="@+id/imageView1"
+                style="@style/IconQuychMeal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_profile"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/IconQuychMeal" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/TextQuychMeal"
                 android:id="@+id/textView1"
+                style="@style/TextQuychMeal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -122,8 +124,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                style="@style/IconQuychMeal"
                 android:id="@+id/imageView2"
+                style="@style/IconQuychMeal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow"
@@ -136,8 +138,8 @@
             android:id="@+id/constraintLayoutSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingVertical="10dp"
+            android:paddingVertical="20dp"
+            android:paddingHorizontal="10dp"
             android:background="#00FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -183,8 +185,8 @@
             android:id="@+id/constraintLayoutFeedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingVertical="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSetting">
@@ -227,13 +229,15 @@
 
         <Button
             android:id="@+id/btnLogout"
+            style="@style/TextQuychMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/custom_button"
             android:maxWidth="400dp"
             android:minWidth="350dp"
             android:text="@string/log_out"
-            style="@style/TextQuychMeal"
             android:textSize="16sp"
             android:textStyle="bold"
             app:backgroundTint="@null"

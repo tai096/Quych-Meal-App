@@ -11,6 +11,16 @@
     <string name="send_feedback">Phản hồi</string>
     <string name="log_out">Đăng xuất</string>
     <string name="posts">Bài viết</string>
+    <string name="notification">Thông báo</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="dark_mode">Chế độ tối</string>
+    <string name="username">Tên tài khoản</string>
+    <string name="sex">Giới tính</string>
+    <string name="age">Tuổi</string>
+    <string name="save">Lưu</string>
+    <string name="feedback">Phản hồi</string>
+    <string name="send">Gửi</string>
+    <string name="give_us_your_feedback">Cho chúng tôi biết phản hồi của bạn</string>
 
     <string-array name="sex_options">
         <item>nam</item>

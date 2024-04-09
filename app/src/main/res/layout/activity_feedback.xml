@@ -34,7 +34,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Feedback"
+            android:text="@string/feedback"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -48,7 +48,7 @@
         android:layout_marginVertical="20dp"
         android:background="@drawable/custom_button"
         android:gravity="top"
-        android:hint="Give us your feedback"
+        android:hint="@string/give_us_your_feedback"
         android:inputType="text|textMultiLine"
         android:lines="6"
         android:maxLines="6"
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:drawableEnd="@android:drawable/ic_menu_send"
-        android:text="Send"
+        android:text="@string/send"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
