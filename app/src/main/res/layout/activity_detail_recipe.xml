@@ -167,6 +167,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:gravity="center"
                         android:id="@+id/servings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -204,10 +205,15 @@
                     </LinearLayout>
 
                     <TextView
+                        android:gravity="center"
                         android:id="@+id/Preptime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:textSize="18sp"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:textFontWeight="600"
+                        android:textStyle="italic"
+                        android:text="15m" />
                 </LinearLayout>
 
                 <LinearLayout
