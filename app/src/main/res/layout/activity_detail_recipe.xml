@@ -9,7 +9,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,48 +29,64 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@drawable/fresh_spring_rolls" />
 
                 <ImageView
                     android:id="@+id/backBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="48dp"
+                    android:src="?attr/actionModeCloseDrawable"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView"
-                    tools:srcCompat="?attr/actionModeCloseDrawable" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@android:drawable/ic_menu_info_details" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:fontFamily="@font/quicksand_bold"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:textSize="25sp"
-                android:textFontWeight="700"
-                android:id="@+id/titleTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fresh Spring Rolls" />
-
-            <TextView
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:id="@+id/descTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:text="Fresh spring rolls, also known as Vietnamese spring rolls or summer rolls, are a delightful and healthy dish...." />
-
             <LinearLayout
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/titleTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Fresh Spring Rolls"
+                    android:textFontWeight="700"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/descTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Fresh spring rolls, also known as Vietnamese spring rolls or summer rolls, are a delightful and healthy dish...."
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -86,28 +104,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:text="Amelia Parker" />
+                    android:text="Amelia Parker"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp">
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_gravity="center"
                     android:id="@+id/cookingLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="0"
                     android:fontFamily="@font/quicksand_bold"
+                    android:text="Cooking level: "
                     android:textFontWeight="600"
-                    android:textSize="16sp"
-                    android:text="Cooking level: " />
+                    android:textSize="16sp" />
 
                 <RatingBar
                     android:id="@+id/ratingBar2"
@@ -132,13 +150,14 @@
                 android:backgroundTint="@color/black" />
 
             <LinearLayout
-                android:paddingTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="0"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -167,16 +186,22 @@
                     </LinearLayout>
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/servings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
                         android:fontFamily="@font/quicksand_bold"
+                        android:gravity="center"
+                        android:text="4pp"
                         android:textFontWeight="600"
-                        android:textStyle="italic"
-                        android:text="4pp" />
+                        android:textSize="18sp" />
+
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/black" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -205,16 +230,22 @@
                     </LinearLayout>
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/Preptime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
                         android:fontFamily="@font/quicksand_bold"
+                        android:gravity="center"
+                        android:text="15m"
                         android:textFontWeight="600"
-                        android:textStyle="italic"
-                        android:text="15m" />
+                        android:textSize="18sp" />
+
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/black" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -246,7 +277,11 @@
                         android:id="@+id/cookingTIme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:fontFamily="@font/quicksand_bold"
+                        android:gravity="center"
+                        android:text="20m"
+                        android:textFontWeight="600"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -262,6 +297,23 @@
                 android:background="@color/black"
                 android:backgroundTint="@color/black" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="188dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="108dp"
+                    android:layout_marginTop="48dp"
+                    android:gravity="center"
+                    android:text="Button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
