@@ -44,6 +44,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         holder.foodServing.setText(food.getServing());
         holder.foodCookTime.setText(food.getCookTime());
         holder.foodPrepTime.setText(food.getPrepTime());
+        holder.foodLevel.setText(String.valueOf(food.getLevel()));
     }
 
     public void setFoodList(List<Food> foodList) {
@@ -55,7 +56,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         return foodList.size();
     }
 
-    public void filterList(List<Food> filteredList) {
+    public void setfilteredList(List<Food> filteredList) {
         foodList = filteredList;
         notifyDataSetChanged();
     }
@@ -66,6 +67,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         TextView foodServing;
         TextView foodPrepTime;
         TextView foodCookTime;
+        TextView foodLevel;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -75,6 +77,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
             foodServing = itemView.findViewById(R.id.servingValue);
             foodPrepTime = itemView.findViewById(R.id.prepValue);
             foodCookTime = itemView.findViewById(R.id.cookValue);
+            foodLevel = itemView.findViewById(R.id.foodLevel);
         }
     }
 }
