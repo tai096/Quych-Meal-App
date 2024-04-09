@@ -1,6 +1,7 @@
 package com.example.quychmeal.Activities.Fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.quychmeal.Adapter.CategoriesAdapter;
 import com.example.quychmeal.Adapter.FoodsAdapter;
@@ -40,6 +42,7 @@ public class HomeScreenFragment extends Fragment implements CategoriesAdapter.Ca
     private ProgressBar progressBarCategory;
     private ProgressBar progressBarFood;
     private SearchView searchView;
+    private Context context;
 
     @Override
     public void onCategoryClick(Category category) {
@@ -62,6 +65,7 @@ public class HomeScreenFragment extends Fragment implements CategoriesAdapter.Ca
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                handleSearch(newText);
                 return false;
             }
         });
@@ -97,8 +101,18 @@ public class HomeScreenFragment extends Fragment implements CategoriesAdapter.Ca
         return view;
     }
 
-    private void handleSearch(String searchTxt) {
-
+    private void handleSearch(String searchText) {
+        List<Food> filteredList = new ArrayList<>();
+        for (Food food : foodList) {
+            if (food.getName().toLowerCase().contains(searchText.toLowerCase())) {
+                filteredList.add(food);
+            }
+        }
+        if (filteredList.isEmpty()) {
+            Toast.makeText(context.getApplicationContext(), "No recipe found", Toast.LENGTH_SHORT).show();
+        } else {
+            foodsAdapter.setfilteredList(filteredList);
+        }
     }
 
     private void getCategories() {
