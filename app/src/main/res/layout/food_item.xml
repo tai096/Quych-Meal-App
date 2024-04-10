@@ -131,6 +131,7 @@
             android:text="Check"
             android:fontFamily="@font/nunito_bold"
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:drawableEnd="@drawable/ic_arrow_forward"
             android:drawableTint="@color/white"
             android:layout_alignParentEnd="true" />
