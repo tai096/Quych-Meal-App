@@ -81,7 +81,7 @@ public class TodayMenuScreenFragment extends Fragment {
         }
     }
 
-    private void getIngredients (){
+    private void getIngredients() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -99,9 +99,12 @@ public class TodayMenuScreenFragment extends Fragment {
         });
     }
 
-    private void handleClickIngredient(){
+    private void handleClickIngredient() {
         gridView.setOnItemClickListener((parent, view, position, id) -> {
-            Ingredient ingredient = ingredientArrayList.get(position);
+//            Ingredient ingredient = ingredientArrayList.get(position);
+//            Integer ingredientId = ingredient.getId();
+
+            Ingredient ingredient = (Ingredient) view.getTag();
             Integer ingredientId = ingredient.getId();
             String ingredientName = ingredient.getName();
 
@@ -110,19 +113,24 @@ public class TodayMenuScreenFragment extends Fragment {
             // Toggle selection
             if (selectedIngredients.contains(ingredientId)) {
                 selectedIngredients.remove(ingredientId);
-                nameIngredient.setBackgroundResource(R.drawable.custom_button);
-                nameIngredient.setTextColor(getResources().getColor(R.color.darkMode));
+                if(ingredientName == nameIngredient.getText()){
+                    nameIngredient.setBackgroundResource(R.drawable.custom_button);
+                    nameIngredient.setTextColor(getResources().getColor(R.color.darkMode));
+                }
+
             } else {
-                    selectedIngredients.add(ingredientId);
+                selectedIngredients.add(ingredientId);
+                if(ingredientName == nameIngredient.getText()){
                     nameIngredient.setBackgroundResource(R.drawable.custom_selected_item);
                     nameIngredient.setTextColor(getResources().getColor(R.color.white));
+                }
             }
             updateButtonState();
         });
 
     }
 
-    private void handleSearchIngredients(){
+    private void handleSearchIngredients() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

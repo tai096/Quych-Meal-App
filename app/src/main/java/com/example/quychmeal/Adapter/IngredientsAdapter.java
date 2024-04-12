@@ -48,8 +48,15 @@ public class IngredientsAdapter extends BaseAdapter {
 
         }
 
+        // Get the current ingredient
+        Ingredient ingredient = ingredientArrayList.get(position);
+
+        // Set the tag for the view
+        convertView.setTag(ingredient);
+
         TextView nameIngredient = convertView.findViewById(R.id.nameIngredient);
         nameIngredient.setText(ingredientArrayList.get(position).getName());
+
 
         return convertView;
     }

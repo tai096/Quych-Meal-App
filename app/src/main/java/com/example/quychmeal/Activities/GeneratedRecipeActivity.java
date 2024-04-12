@@ -66,6 +66,7 @@ public class GeneratedRecipeActivity extends RootActivity {
         reipeAdapter = new ReipeAdapter( recipeArrayList, GeneratedRecipeActivity.this);
         gridView.setAdapter(reipeAdapter);
 
+        Log.d("debug", "selectedIngredients"+ selectedIngredients);
         getFoods();
         handleGoBack();
     }
