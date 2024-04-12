@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.quychmeal.Models.Food;
 import com.example.quychmeal.R;
 
@@ -54,7 +57,7 @@ public class OwnFoodAdapter extends RecyclerView.Adapter<OwnFoodAdapter.ViewHold
   public void onBindViewHolder(@NonNull OwnFoodAdapter.ViewHolder holder, int position) {
     Food food = foodList.get(position);
     holder.foodName.setText(food.getName());
-
+    Glide.with(holder.itemView.getContext()).load(food.getImage()).transform(new CenterCrop(), new RoundedCorners(10)).into(holder.foodImg);
     holder.foodPrepTime.setText(food.getPrepTime() + "hrs");
     holder.foodServing.setText(food.getServing() + "pp");
     holder.foodCookTime.setText(food.getCookTime() + "hrs");

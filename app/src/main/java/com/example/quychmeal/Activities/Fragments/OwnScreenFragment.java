@@ -108,13 +108,14 @@ public class OwnScreenFragment extends Fragment {
             int cookTime = foodSnapshot.child("cookTime").getValue(Integer.class);
             String description = foodSnapshot.child("description").getValue(String.class);
             int id = foodSnapshot.child("id").getValue(Integer.class);
+            String image = foodSnapshot.child("image").getValue(String.class);
             int level = foodSnapshot.child("level").getValue(Integer.class);
             String method = foodSnapshot.child("method").getValue(String.class);
             String foodName = foodSnapshot.child("name").getValue(String.class);
             int prepTime = foodSnapshot.child("prepTime").getValue(Integer.class);
             int serving = foodSnapshot.child("serving").getValue(Integer.class);
 
-            Food food = new Food(id, cateId, cookTime, currentUserId, description, null, null, level, method, foodName, prepTime, serving, null);
+            Food food = new Food(id, cateId, cookTime, currentUserId, description, image, null, level, method, foodName, prepTime, serving, null);
             foodList.add(food);
           }
           foodListAdapter.notifyDataSetChanged();
