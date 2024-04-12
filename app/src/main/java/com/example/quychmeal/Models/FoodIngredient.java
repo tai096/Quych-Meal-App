@@ -1,18 +1,18 @@
 package com.example.quychmeal.Models;
 
 public class FoodIngredient {
-    private int ingredientId;
+    private Integer ingredientId;
     private String quantity;
 
     public FoodIngredient() {
     }
 
-    public FoodIngredient(int ingredientId, String quantity) {
+    public FoodIngredient(Integer ingredientId, String quantity) {
         this.ingredientId = ingredientId;
         this.quantity = quantity;
     }
 
-    public int getIngredientId() {
+    public Integer getIngredientId() {
         return ingredientId;
     }
 

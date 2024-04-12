@@ -2,6 +2,10 @@ package com.example.quychmeal.Activities.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -9,21 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
 import com.example.quychmeal.Adapter.CategoriesAdapter;
 import com.example.quychmeal.Adapter.FoodsAdapter;
 import com.example.quychmeal.Models.Category;
 import com.example.quychmeal.Models.Food;
 import com.example.quychmeal.R;
-import com.example.quychmeal.databinding.FragmentHomeScreenBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;

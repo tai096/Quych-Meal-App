@@ -10,6 +10,10 @@
     <string name="send_feedback">Send feedback</string>
     <string name="log_out">Log out</string>
     <string name="posts">Posts</string>
+    <string name="today_s_menu">Today\'s menu</string>
+    <string name="what_ingredients_do_you_have">What ingredients do you have?</string>
+    <string name="get_recipes">Get recipes</string>
+    <string name="recipes_of_the_day">Recipes of the day</string>
 
     <string-array name="sex_options">
         <item>male</item>
