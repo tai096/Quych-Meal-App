@@ -6,26 +6,32 @@
     <string name="channel_name">my_notification</string>
     <string name="channel_description">channel_description</string>
 
-    <string name="edit_profile">Sửa hồ sơ</string>
-    <string name="settings">Cài đặt</string>
-    <string name="send_feedback">Phản hồi</string>
-    <string name="log_out">Đăng xuất</string>
-    <string name="posts">Bài viết</string>
-    <string name="today_s_menu">Today\'s menu</string>
-    <string name="what_ingredients_do_you_have">What ingredients do you have?</string>
-    <string name="get_recipes">Get recipes</string>
-    <string name="recipes_of_the_day">Recipes of the day</string>
+    <string name="edit_profile">プロフィール</string>
+    <string name="settings">設定</string>
+    <string name="send_feedback">フィードバック</string>
+    <string name="log_out">ログアウト</string>
+    <string name="posts">投稿</string>
+    <string name="notification">通知</string>
+    <string name="dark_mode">ダークモード</string>
+    <string name="language">言語</string>
+    <string name="username">ユーザー</string>
+    <string name="sex">セックス</string>
+    <string name="age">年齢</string>
+    <string name="save">セーブ</string>
+    <string name="feedback">フィードバック</string>
+    <string name="send">送信</string>
+    <string name="give_us_your_feedback">フィードバックをお寄せください</string>
 
     <string-array name="sex_options">
-        <item>nam</item>
-        <item>nữ</item>
-        <item>khac</item>
+        <item>男性</item>
+        <item>女性</item>
+        <item>他の</item>
     </string-array>
 
     <string-array name="languages_options">
-        <item>Tiếng việt</item>
-        <item>Tiếng anh</item>
-        <item>Tiếng nhật</item>
+        <item>ベトナム語</item>
+        <item>英語</item>
+        <item>日本語</item>
     </string-array>
 
 </resources>
