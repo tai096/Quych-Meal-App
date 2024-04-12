@@ -1,20 +1,31 @@
 package com.example.quychmeal.Activities.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.example.quychmeal.Adapter.OwnFoodAdapter;
+import com.example.quychmeal.Models.Food;
 import com.example.quychmeal.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OwnScreenFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class OwnScreenFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -25,6 +36,12 @@ public class OwnScreenFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<Food> foodList = new ArrayList<>();
+    private RecyclerView foodRecyclerView;
+    private OwnFoodAdapter foodListAdapter;
+    private Context mContext;
+    SharedPreferences pref;
+  private static final String SHARED_PREF_NAME = "mypref";
 
     public OwnScreenFragment() {
         // Required empty public constructor
@@ -61,6 +78,51 @@ public class OwnScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_own_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_own_screen, container, false);
+
+        pref = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        // RecyclerView (Own Recipe List)
+        RecyclerView foodRecyclerView = view.findViewById(R.id.ownFoodRecyclerView);
+        foodRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 1));
+        foodListAdapter = new OwnFoodAdapter(foodList);
+        foodRecyclerView.setAdapter(foodListAdapter);
+
+        // Add new recipe
+        ImageView createRecipe = view.findViewById(R.id.createRecipeBtn);
+
+        // Get Recipes from Firebase Realtime DB
+        getRecipe();
+        return view;
+    }
+
+    private void getRecipe() {
+      String currentUserId = pref.getString("userId", null);
+      assert currentUserId != null;
+      DatabaseReference foodListReference = FirebaseDatabase.getInstance().getReference("foods");
+      foodListReference.orderByChild("createdBy").equalTo(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot snapshot) {
+          for (DataSnapshot foodSnapshot : snapshot.getChildren()) {
+            int cateId = foodSnapshot.child("categoryId").getValue(Integer.class);
+            int cookTime = foodSnapshot.child("cookTime").getValue(Integer.class);
+            String description = foodSnapshot.child("description").getValue(String.class);
+            int id = foodSnapshot.child("id").getValue(Integer.class);
+            int level = foodSnapshot.child("level").getValue(Integer.class);
+            String method = foodSnapshot.child("method").getValue(String.class);
+            String foodName = foodSnapshot.child("name").getValue(String.class);
+            int prepTime = foodSnapshot.child("prepTime").getValue(Integer.class);
+            int serving = foodSnapshot.child("serving").getValue(Integer.class);
+
+            Food food = new Food(id, cateId, cookTime, currentUserId, description, null, null, level, method, foodName, prepTime, serving, null);
+            foodList.add(food);
+          }
+          foodListAdapter.notifyDataSetChanged();
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+      });
     }
 }

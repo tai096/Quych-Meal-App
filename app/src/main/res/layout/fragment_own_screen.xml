@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  >
+
+  <LinearLayout
+    android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Fragments.OwnScreenFragment">
+    android:layout_marginHorizontal="20dp"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical">
+      <TextView
+        android:id="@+id/userRecipeTitle"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="Own Screen"
-        android:textSize="30dp"
-        android:layout_gravity="center"
+        android:text="My Recipes"
+        android:textSize="40dp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        android:layout_marginVertical="30dp"/>
+      <ImageView
+        android:id="@+id/createRecipeBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_add_food"
         />
+    </LinearLayout>
 
-</FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/ownFoodRecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+  </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
