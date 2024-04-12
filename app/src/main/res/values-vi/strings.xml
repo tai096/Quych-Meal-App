@@ -21,6 +21,11 @@
     <string name="feedback">Phản hồi</string>
     <string name="send">Gửi</string>
     <string name="give_us_your_feedback">Cho chúng tôi biết phản hồi của bạn</string>
+    <string name="today_s_menu">Thực đơn hôm nay</string>
+    <string name="what_ingredients_do_you_have">Bạn đang có nguyên liệu gì?</string>
+    <string name="get_recipes">Tìm công thức</string>
+    <string name="recipes_of_the_day">Thực đơn hôm nay</string>
+    <string name="no_recipes_are_matching_your_ingredients">Không có công thức nào cho nguyên liệu của bạn!</string>
 
     <string-array name="sex_options">
         <item>nam</item>

@@ -21,6 +21,11 @@
     <string name="feedback">フィードバック</string>
     <string name="send">送信</string>
     <string name="give_us_your_feedback">フィードバックをお寄せください</string>
+    <string name="today_s_menu">本日のメニュー</string>
+    <string name="what_ingredients_do_you_have">どのような成分が入っていますか？</string>
+    <string name="get_recipes">レシピを入手する</string>
+    <string name="recipes_of_the_day">今日のレシピ</string>
+    <string name="no_recipes_are_matching_your_ingredients">あなたの材料に合ったレシピはありません!</string>
 
     <string-array name="sex_options">
         <item>男性</item>

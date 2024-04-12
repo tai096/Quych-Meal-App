@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Change the background color to represent the selected state -->
+    <solid android:color="@color/primary" /> <!-- Yellow color, you can change it to any color you prefer -->
+    <corners android:radius="20dp" />
+</shape>
