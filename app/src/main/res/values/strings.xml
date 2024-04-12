@@ -24,6 +24,7 @@
     <string name="what_ingredients_do_you_have">What ingredients do you have?</string>
     <string name="get_recipes">Get recipes</string>
     <string name="recipes_of_the_day">Recipes of the day</string>
+    <string name="no_recipes_are_matching_your_ingredients">No recipes match your ingredients!</string>
 
     <string-array name="sex_options">
         <item>male</item>

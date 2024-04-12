@@ -53,4 +53,10 @@ public class IngredientsAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public void filterList(ArrayList<Ingredient> filteredList) {
+        ingredientArrayList = filteredList;
+        notifyDataSetChanged();
+    }
+
 }

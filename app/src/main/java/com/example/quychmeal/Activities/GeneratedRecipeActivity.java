@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -37,6 +40,8 @@ public class GeneratedRecipeActivity extends RootActivity {
     ArrayList<Food> recipeArrayList;
     ReipeAdapter reipeAdapter;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("foods");
+    LinearLayout notFoundView;
+    ImageButton btnGenRecipeGoBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +58,22 @@ public class GeneratedRecipeActivity extends RootActivity {
 
         selectedIngredients = getIntent().getIntegerArrayListExtra("selectedIngredients");
 
-
+        notFoundView = findViewById(R.id.notFoundView);
         gridView = findViewById(R.id.recipeGridView);
+        btnGenRecipeGoBack = findViewById(R.id.btnGenRecipeGoBack);
+
         recipeArrayList = new ArrayList<>();
         reipeAdapter = new ReipeAdapter( recipeArrayList, GeneratedRecipeActivity.this);
         gridView.setAdapter(reipeAdapter);
 
         getFoods();
+        handleGoBack();
+    }
+
+    private void handleGoBack() {
+        btnGenRecipeGoBack.setOnClickListener(v -> {
+            GeneratedRecipeActivity.this.finish();
+        });
     }
 
     private void getFoods() {
@@ -73,6 +87,12 @@ public class GeneratedRecipeActivity extends RootActivity {
                     }
                 }
                 reipeAdapter.notifyDataSetChanged();
+
+                if (recipeArrayList.isEmpty()) {
+                    notFoundView.setVisibility(View.VISIBLE);
+                } else {
+                    notFoundView.setVisibility(View.GONE);
+                }
             }
 
             @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 public class TodayMenuScreenFragment extends Fragment {
 
     GridView gridView;
+    SearchView searchView;
     ArrayList<Ingredient> ingredientArrayList;
     IngredientsAdapter ingredientsAdapter;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ingredients");
@@ -48,6 +50,7 @@ public class TodayMenuScreenFragment extends Fragment {
 
         btnGetRecipe = view.findViewById(R.id.btnGetRecipe);
         gridView = view.findViewById(R.id.ingredientGridView);
+        searchView = view.findViewById(R.id.searchIngredientView);
 
         ingredientArrayList = new ArrayList<>();
         ingredientsAdapter = new IngredientsAdapter(ingredientArrayList, getContext());
@@ -56,6 +59,9 @@ public class TodayMenuScreenFragment extends Fragment {
         getIngredients();
         handleClickIngredient();
         handleClickGetRecipe();
+        handleSearchIngredients();
+        updateButtonState();
+
         return view;
     }
 
@@ -65,10 +71,15 @@ public class TodayMenuScreenFragment extends Fragment {
             intent.putIntegerArrayListExtra("selectedIngredients", selectedIngredients);
             startActivity(intent);
         });
-
-
     }
 
+    private void updateButtonState() {
+        if (selectedIngredients.isEmpty()) {
+            btnGetRecipe.setEnabled(false);
+        } else {
+            btnGetRecipe.setEnabled(true);
+        }
+    }
 
     private void getIngredients (){
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -92,6 +103,7 @@ public class TodayMenuScreenFragment extends Fragment {
         gridView.setOnItemClickListener((parent, view, position, id) -> {
             Ingredient ingredient = ingredientArrayList.get(position);
             Integer ingredientId = ingredient.getId();
+            String ingredientName = ingredient.getName();
 
             TextView nameIngredient = view.findViewById(R.id.nameIngredient);
 
@@ -101,11 +113,45 @@ public class TodayMenuScreenFragment extends Fragment {
                 nameIngredient.setBackgroundResource(R.drawable.custom_button);
                 nameIngredient.setTextColor(getResources().getColor(R.color.darkMode));
             } else {
-                selectedIngredients.add(ingredientId);
-                nameIngredient.setBackgroundResource(R.drawable.custom_selected_item);
-                nameIngredient.setTextColor(getResources().getColor(R.color.white));
+                    selectedIngredients.add(ingredientId);
+                    nameIngredient.setBackgroundResource(R.drawable.custom_selected_item);
+                    nameIngredient.setTextColor(getResources().getColor(R.color.white));
             }
+            updateButtonState();
         });
 
     }
+
+    private void handleSearchIngredients(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterIngredients(newText);
+
+                return true;
+            }
+        });
+    }
+
+    private void filterIngredients(String searchText) {
+        ArrayList<Ingredient> filteredList = new ArrayList<>();
+
+        for (Ingredient ingredient : ingredientArrayList) {
+            int position = ingredientArrayList.indexOf(ingredient);
+            // Get the corresponding view in the GridView
+            View view = gridView.getChildAt(position);
+
+            if (ingredient.getName().toLowerCase().contains(searchText.toLowerCase())) {
+                filteredList.add(ingredient);
+            }
+        }
+
+        ingredientsAdapter.filterList(filteredList);
+    }
+
 }
