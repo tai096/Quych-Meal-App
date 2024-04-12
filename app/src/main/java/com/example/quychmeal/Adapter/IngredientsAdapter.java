@@ -1,6 +1,7 @@
 package com.example.quychmeal.Adapter;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,8 @@ public class IngredientsAdapter extends BaseAdapter {
         TextView nameIngredient = convertView.findViewById(R.id.nameIngredient);
         nameIngredient.setText(ingredientArrayList.get(position).getName());
 
+        int nightModeFlags = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
         // Check if the ingredient ID is in selectedIngredients
         if (selectedIngredients.contains(ingredient.getId())) {
             // Change the background color of the TextView
@@ -65,7 +68,9 @@ public class IngredientsAdapter extends BaseAdapter {
         } else {
             // Change the background color back to default
             nameIngredient.setBackgroundResource(R.drawable.custom_button);
-            nameIngredient.setTextColor(context.getResources().getColor(R.color.darkMode));
+            if(nightModeFlags != Configuration.UI_MODE_NIGHT_YES) {
+                nameIngredient.setTextColor(context.getResources().getColor(R.color.darkMode));
+            }
         }
 
         return convertView;

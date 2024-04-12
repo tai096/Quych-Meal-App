@@ -11,5 +11,7 @@
     <style name="ScreenQuychMeal"><item name="android:background">@color/darkMode</item></style>
     <style name="TextQuychMeal"><item name="android:textColor">@color/white</item></style>
     <style name="IconQuychMeal"><item name="android:tint">@color/white</item></style>
-
+    <style name="CustomIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/transparent</item>
+    </style>
 </resources>
