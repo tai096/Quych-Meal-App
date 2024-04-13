@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.example.quychmeal.Adapter.OwnFoodAdapter;
@@ -85,6 +86,7 @@ public class OwnScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_own_screen, container, false);
+        mContext = getContext();
 
         pref = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
@@ -163,6 +165,31 @@ public class OwnScreenFragment extends Fragment {
         }
       });
 
+      // Add content to ingredientSpinner
+      DatabaseReference ingredientRef = FirebaseDatabase.getInstance().getReference("ingredients");
+      ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+          List<String> ingredientList = new ArrayList<>();
+          for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+            String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
+            if (ingredientName != null) {
+              ingredientList.add(ingredientName);
+            }
+          }
+          MultiAutoCompleteTextView ingredientTemp = foodDialog.findViewById(R.id.ingredientInputValue);
+
+          // Set Adapter
+          ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,  android.R.layout.simple_dropdown_item_1line, ingredientList);
+          ingredientTemp.setAdapter(adapter);
+          ingredientTemp.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+          Log.d("Error", String.valueOf(error));
+        }
+      });
+
       // Show the Dialog
       AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
       builder.setView(foodDialog);
@@ -170,6 +197,7 @@ public class OwnScreenFragment extends Fragment {
 
       });
       builder.setNegativeButton("Cancel", (dialog, which) -> {
+        cateNames.clear();
         dialog.dismiss();
       });
       AlertDialog alertDialog = builder.create();
