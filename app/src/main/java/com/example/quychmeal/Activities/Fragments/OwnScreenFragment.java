@@ -1,18 +1,23 @@
 package com.example.quychmeal.Activities.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.example.quychmeal.Adapter.OwnFoodAdapter;
 import com.example.quychmeal.Models.Food;
@@ -37,7 +42,8 @@ public class OwnScreenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private List<Food> foodList = new ArrayList<>();
-    private RecyclerView foodRecyclerView;
+    private List<String> cateNames = new ArrayList<>();
+    private ArrayAdapter<String> spinnerAdapter;
     private OwnFoodAdapter foodListAdapter;
     private Context mContext;
     SharedPreferences pref;
@@ -90,6 +96,12 @@ public class OwnScreenFragment extends Fragment {
 
         // Add new recipe
         ImageView createRecipe = view.findViewById(R.id.createRecipeBtn);
+        createRecipe.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            showDialog();
+          }
+        });
 
         // Get Recipes from Firebase Realtime DB
         getRecipe();
@@ -125,5 +137,42 @@ public class OwnScreenFragment extends Fragment {
 
         }
       });
+    }
+
+    private void showDialog() {
+      View foodDialog = getLayoutInflater().inflate(R.layout.dialog_food, null);
+      Spinner cateSpinner = foodDialog.findViewById(R.id.categoryInputValue);
+
+      // Add content to cateSpinner
+      DatabaseReference cateListReference = FirebaseDatabase.getInstance().getReference("categories");
+      cateListReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+          for (DataSnapshot cateSnapshot : snapshot.getChildren()) {
+            String cateName = cateSnapshot.child("name").getValue(String.class);
+            if (cateName != null) {
+              cateNames.add(cateName);
+            }
+          }
+          spinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, cateNames);
+          spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+          cateSpinner.setAdapter(spinnerAdapter);
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+        }
+      });
+
+      // Show the Dialog
+      AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+      builder.setView(foodDialog);
+      builder.setPositiveButton("Save", (dialog, which) -> {
+
+      });
+      builder.setNegativeButton("Cancel", (dialog, which) -> {
+        dialog.dismiss();
+      });
+      AlertDialog alertDialog = builder.create();
+      alertDialog.show();
     }
 }

@@ -14,7 +14,6 @@
     android:layout_height="100dp"
     android:scaleType="centerCrop"
     android:src="@drawable/background_login"
-    android:background="@drawable/ur_food_img"
     />
 
   <TextView
