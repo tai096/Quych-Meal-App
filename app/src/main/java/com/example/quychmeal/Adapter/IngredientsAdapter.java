@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class IngredientsAdapter extends BaseAdapter {
     private ArrayList<Ingredient> ingredientArrayList;
     private ArrayList<Integer> selectedIngredients;
-    private Context context;
+    private final Context context;
     LayoutInflater layoutInflater;
 
     public IngredientsAdapter(ArrayList<Ingredient> ingredientArrayList, ArrayList<Integer> selectedIngredients, Context context) {

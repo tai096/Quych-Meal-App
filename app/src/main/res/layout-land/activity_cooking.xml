@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.CookingActivity">
+
+    <ImageView
+        android:id="@+id/foodBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/background_food" />
+
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        app:srcCompat="#9F1B1B1B" />-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BC000000"
+        />
+
+    <ImageButton
+        android:id="@+id/btnCookingBack"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:background="@null"
+        android:padding="15dp"
+        android:rotation="180"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_arrow"
+        app:tint="@color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnCookingBack">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/ingredients"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <GridView
+                android:id="@+id/foodIngredientGridView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/custom_border_radius"
+                android:backgroundTint="#B5FFFFFF"
+                android:nestedScrollingEnabled="true"
+                android:numColumns="1"
+                tools:ignore="NestedScrolling" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="@string/method"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/foodMethod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="method"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="@string/tutorial_video"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <WebView
+                android:id="@+id/foodVideo"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                tools:ignore="WebViewLayout" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
