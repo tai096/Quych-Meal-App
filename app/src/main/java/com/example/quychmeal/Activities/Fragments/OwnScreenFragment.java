@@ -1,11 +1,16 @@
 package com.example.quychmeal.Activities.Fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
@@ -31,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -38,15 +46,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class OwnScreenFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private List<Food> foodList = new ArrayList<>();
@@ -57,19 +59,17 @@ public class OwnScreenFragment extends Fragment {
     private OwnFoodAdapter foodListAdapter;
     private Context mContext;
     SharedPreferences pref;
-  private static final String SHARED_PREF_NAME = "mypref";
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri imageURI;
+    private ImageView selectedImage;
 
     public OwnScreenFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -96,7 +96,6 @@ public class OwnScreenFragment extends Fragment {
           }
         });
 
-        // Get Recipes from Firebase Realtime DB
         getRecipe();
         return view;
     }
@@ -127,7 +126,6 @@ public class OwnScreenFragment extends Fragment {
         }
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-
         }
       });
     }
@@ -182,6 +180,18 @@ public class OwnScreenFragment extends Fragment {
         }
       });
 
+      // Add image
+      Button addImageBtn = foodDialog.findViewById(R.id.imageAddBtn);
+      selectedImage = foodDialog.findViewById(R.id.imageInputValue);
+      addImageBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+          intent.setType("image/*");
+          startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        }
+      });
+
       // Show the Dialog
       AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
       builder.setView(foodDialog);
@@ -197,7 +207,7 @@ public class OwnScreenFragment extends Fragment {
         TextView cookTimeInput = foodDialog.findViewById(R.id.cookTimeInputValue);
         TextView videoURL = foodDialog.findViewById(R.id.videoInputValue);
 
-        // Get selected
+        // Get selected data
         String saveName = nameInput.getText().toString();
         String saveIngredients = ingredientInput.getText().toString();
         String saveAbout = aboutInput.getText().toString();
@@ -207,7 +217,7 @@ public class OwnScreenFragment extends Fragment {
         int saveCook = Integer.parseInt(cookTimeInput.getText().toString());
         String saveVideo = videoURL.getText().toString();
 
-        // Convert Ingredient to ID
+        // Set Ingredient ID
         List<String> ingredientNames = Arrays.asList(saveIngredients.split("\\s*,\\s*"));
         List<FoodIngredient> ingredientList = new ArrayList<>();
         for (String ingredientName : ingredientNames) {
@@ -218,15 +228,14 @@ public class OwnScreenFragment extends Fragment {
           }
         }
 
-        for (FoodIngredient food : ingredientList) {
-          int id = food.getIngredientId();
-          Log.d("Ingredients ID", String.valueOf(id));
-        }
-
-        // Convert Category
-        // Get selected category name
+        // Set Category
         String selectedCategoryName = cateInput.getSelectedItem().toString();
         int saveCate = Integer.parseInt(categoryMap.get(selectedCategoryName));
+
+        // Set VideoURL
+        String youtubeEmbedUrl = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/";
+        String videoId = saveVideo.substring(saveVideo.lastIndexOf("=") + 1);
+        String formattedVideoURL = youtubeEmbedUrl + videoId + "?si=yrKhxfGi4NHzaPrd\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
 
         // Add to Firebase
         String currentUserId = pref.getString("userId", null);
@@ -238,16 +247,15 @@ public class OwnScreenFragment extends Fragment {
             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
               id = snapshot.child("id").getValue(Integer.class);
             }
-            Food newFood = new Food(id++, saveCate, saveCook, currentUserId, saveAbout, null, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, null);
-            Log.d("NewFood", String.valueOf(newFood));
+            Food newFood = new Food(id++, saveCate, saveCook, currentUserId, saveAbout, null, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
             foodListReference.child(String.valueOf(id)).setValue(newFood);
             Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
             foodListAdapter.notifyDataSetChanged();
+            cateNames.clear();
           }
-
           @Override
           public void onCancelled(@NonNull DatabaseError error) {
-
+            Log.d("Error", String.valueOf(error));
           }
         });
       });
@@ -257,5 +265,30 @@ public class OwnScreenFragment extends Fragment {
       });
       AlertDialog alertDialog = builder.create();
       alertDialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+      super.onActivityResult(requestCode, resultCode, data);
+      if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+        imageURI = data.getData();
+        selectedImage.setImageURI(imageURI);
+      }
+    }
+
+    private void uploadImage(int id, int saveCate, int saveCook, String currentUserId, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrep, int saveServing, String formattedVideoURL) {
+      String randomKey = UUID.randomUUID().toString();
+      final ProgressDialog progressDialog = new ProgressDialog(mContext);
+      progressDialog.setTitle("Uploading Image...");
+      progressDialog.show();
+
+      StorageReference reference = FirebaseStorage.getInstance().getReference().child("food_images/" + randomKey);
+
+      reference.putFile(imageURI).addOnSuccessListener(taskSnapshot -> {
+        progressDialog.dismiss();
+        reference.getDownloadUrl().addOnSuccessListener(uri -> {
+          String imageURL = uri.toString();
+        });
+      });
     }
 }
