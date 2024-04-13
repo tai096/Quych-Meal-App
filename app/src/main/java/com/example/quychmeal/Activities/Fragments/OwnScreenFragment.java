@@ -19,17 +19,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quychmeal.Adapter.OwnFoodAdapter;
 import com.example.quychmeal.Models.Food;
 import com.example.quychmeal.R;
+import com.example.quychmeal.Models.FoodIngredient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class OwnScreenFragment extends Fragment {
@@ -44,6 +51,8 @@ public class OwnScreenFragment extends Fragment {
     private String mParam2;
     private List<Food> foodList = new ArrayList<>();
     private List<String> cateNames = new ArrayList<>();
+    private HashMap<String, String> ingredientMap = new HashMap<>();
+    private HashMap<String, String> categoryMap = new HashMap<>();
     private ArrayAdapter<String> spinnerAdapter;
     private OwnFoodAdapter foodListAdapter;
     private Context mContext;
@@ -52,24 +61,6 @@ public class OwnScreenFragment extends Fragment {
 
     public OwnScreenFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static OwnScreenFragment newInstance(String param1, String param2) {
-        OwnScreenFragment fragment = new OwnScreenFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -152,8 +143,10 @@ public class OwnScreenFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
           for (DataSnapshot cateSnapshot : snapshot.getChildren()) {
             String cateName = cateSnapshot.child("name").getValue(String.class);
-            if (cateName != null) {
+            String cateId = cateSnapshot.getKey();
+            if (cateName != null && cateId != null) {
               cateNames.add(cateName);
+              categoryMap.put(cateName, cateId);
             }
           }
           spinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, cateNames);
@@ -170,16 +163,15 @@ public class OwnScreenFragment extends Fragment {
       ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-          List<String> ingredientList = new ArrayList<>();
           for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+            String ingredientId = ingredientSnapshot.getKey();
             String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
             if (ingredientName != null) {
-              ingredientList.add(ingredientName);
+              ingredientMap.put(ingredientName, ingredientId);
             }
           }
           MultiAutoCompleteTextView ingredientTemp = foodDialog.findViewById(R.id.ingredientInputValue);
-
-          // Set Adapter
+          List<String> ingredientList = new ArrayList<>(ingredientMap.keySet());
           ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,  android.R.layout.simple_dropdown_item_1line, ingredientList);
           ingredientTemp.setAdapter(adapter);
           ingredientTemp.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -194,7 +186,70 @@ public class OwnScreenFragment extends Fragment {
       AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
       builder.setView(foodDialog);
       builder.setPositiveButton("Save", (dialog, which) -> {
+        // Retrieve the input data from user
+        TextView nameInput = foodDialog.findViewById(R.id.nameInputValue);
+        MultiAutoCompleteTextView ingredientInput = foodDialog.findViewById(R.id.ingredientInputValue);
+        Spinner cateInput = foodDialog.findViewById(R.id.categoryInputValue);
+        TextView aboutInput = foodDialog.findViewById(R.id.descriptionInputValue);
+        TextView methodInput = foodDialog.findViewById(R.id.nameInputValue);
+        TextView servingInput = foodDialog.findViewById(R.id.servingInputValue);
+        TextView prepTimeInput = foodDialog.findViewById(R.id.prepTimeInputValue);
+        TextView cookTimeInput = foodDialog.findViewById(R.id.cookTimeInputValue);
+        TextView videoURL = foodDialog.findViewById(R.id.videoInputValue);
 
+        // Get selected
+        String saveName = nameInput.getText().toString();
+        String saveIngredients = ingredientInput.getText().toString();
+        String saveAbout = aboutInput.getText().toString();
+        String saveMethod = methodInput.getText().toString();
+        int saveServing = Integer.parseInt(servingInput.getText().toString());
+        int savePrep = Integer.parseInt(prepTimeInput.getText().toString());
+        int saveCook = Integer.parseInt(cookTimeInput.getText().toString());
+        String saveVideo = videoURL.getText().toString();
+
+        // Convert Ingredient to ID
+        List<String> ingredientNames = Arrays.asList(saveIngredients.split("\\s*,\\s*"));
+        List<FoodIngredient> ingredientList = new ArrayList<>();
+        for (String ingredientName : ingredientNames) {
+          if (ingredientMap.containsKey(ingredientName)) {
+            String ingredientId = ingredientMap.get(ingredientName);
+            FoodIngredient foodIngredient = new FoodIngredient(Integer.parseInt(ingredientId), "");
+            ingredientList.add(foodIngredient);
+          }
+        }
+
+        for (FoodIngredient food : ingredientList) {
+          int id = food.getIngredientId();
+          Log.d("Ingredients ID", String.valueOf(id));
+        }
+
+        // Convert Category
+        // Get selected category name
+        String selectedCategoryName = cateInput.getSelectedItem().toString();
+        int saveCate = Integer.parseInt(categoryMap.get(selectedCategoryName));
+
+        // Add to Firebase
+        String currentUserId = pref.getString("userId", null);
+        DatabaseReference foodListReference = FirebaseDatabase.getInstance().getReference("foods");
+        foodListReference.orderByChild("id").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            int id = 0;
+            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+              id = snapshot.child("id").getValue(Integer.class);
+            }
+            Food newFood = new Food(id++, saveCate, saveCook, currentUserId, saveAbout, null, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, null);
+            Log.d("NewFood", String.valueOf(newFood));
+            foodListReference.child(String.valueOf(id)).setValue(newFood);
+            Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
+            foodListAdapter.notifyDataSetChanged();
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+
+          }
+        });
       });
       builder.setNegativeButton("Cancel", (dialog, which) -> {
         cateNames.clear();
