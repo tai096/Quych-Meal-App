@@ -15,6 +15,9 @@
         android:theme="@style/Theme.QuychMeal"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.DetailRecipe2"
+            android:exported="false" />
+        <activity
             android:name=".Activities.DetailRecipeActivity"
             android:exported="false" />
         <activity
