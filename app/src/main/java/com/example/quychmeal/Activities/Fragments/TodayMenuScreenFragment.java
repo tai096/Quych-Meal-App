@@ -53,7 +53,7 @@ public class TodayMenuScreenFragment extends Fragment {
         searchView = view.findViewById(R.id.searchIngredientView);
 
         ingredientArrayList = new ArrayList<>();
-        ingredientsAdapter = new IngredientsAdapter(ingredientArrayList, getContext());
+        ingredientsAdapter = new IngredientsAdapter(ingredientArrayList, selectedIngredients, getContext());
         gridView.setAdapter(ingredientsAdapter);
 
         getIngredients();
@@ -101,31 +101,19 @@ public class TodayMenuScreenFragment extends Fragment {
 
     private void handleClickIngredient() {
         gridView.setOnItemClickListener((parent, view, position, id) -> {
-//            Ingredient ingredient = ingredientArrayList.get(position);
-//            Integer ingredientId = ingredient.getId();
 
             Ingredient ingredient = (Ingredient) view.getTag();
             Integer ingredientId = ingredient.getId();
-            String ingredientName = ingredient.getName();
-
-            TextView nameIngredient = view.findViewById(R.id.nameIngredient);
 
             // Toggle selection
             if (selectedIngredients.contains(ingredientId)) {
                 selectedIngredients.remove(ingredientId);
-                if(ingredientName == nameIngredient.getText()){
-                    nameIngredient.setBackgroundResource(R.drawable.custom_button);
-                    nameIngredient.setTextColor(getResources().getColor(R.color.darkMode));
-                }
-
             } else {
                 selectedIngredients.add(ingredientId);
-                if(ingredientName == nameIngredient.getText()){
-                    nameIngredient.setBackgroundResource(R.drawable.custom_selected_item);
-                    nameIngredient.setTextColor(getResources().getColor(R.color.white));
-                }
             }
             updateButtonState();
+            ingredientsAdapter.setSelectedIngredients(selectedIngredients);
+
         });
 
     }
