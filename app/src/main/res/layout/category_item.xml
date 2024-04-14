@@ -6,27 +6,31 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="3dp"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="15dp">
 
     <LinearLayout
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/cardCategory"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:orientation="vertical"
         android:gravity="center"
         >
 
         <ImageView
             android:id="@+id/categoryImg"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
+            android:layout_marginHorizontal="5dp"
+            style="@style/TextQuychMeal"
             android:id="@+id/categoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
-            android:textSize="16sp"
+            android:textSize="11sp"
             android:text="name"
             android:textAlignment="center" />
     </LinearLayout>

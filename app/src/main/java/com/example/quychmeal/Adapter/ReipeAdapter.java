@@ -63,13 +63,13 @@ public class ReipeAdapter extends BaseAdapter {
         foodName.setText(recipeList.get(position).getName());
 
         foodServing = convertView.findViewById(R.id.servingValue);
-        foodServing.setText(recipeList.get(position).getServing());
+        foodServing.setText(String.valueOf(recipeList.get(position).getServing()) + "p");
 
         foodPrepTime = convertView.findViewById(R.id.prepValue);
-        foodPrepTime.setText(recipeList.get(position).getPrepTime());
+        foodPrepTime.setText(String.valueOf(recipeList.get(position).getPrepTime()) + "m");
 
         foodCookTime = convertView.findViewById(R.id.cookValue);
-        foodCookTime.setText(recipeList.get(position).getCookTime());
+        foodCookTime.setText(String.valueOf (recipeList.get(position).getCookTime()) + "m");
 
         foodImg = convertView.findViewById(R.id.foodImg);
         Glide.with(context).load(recipeList.get(position).getImage()).transform(new CenterCrop(), new RoundedCorners(30)).into(foodImg);

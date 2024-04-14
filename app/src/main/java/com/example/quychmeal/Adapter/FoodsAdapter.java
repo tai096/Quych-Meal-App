@@ -55,7 +55,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         return foodList.size();
     }
 
-    public void filterList(List<Food> filteredList) {
+    public void setfilteredList(List<Food> filteredList) {
         foodList = filteredList;
         notifyDataSetChanged();
     }
@@ -66,7 +66,6 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         TextView foodServing;
         TextView foodPrepTime;
         TextView foodCookTime;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

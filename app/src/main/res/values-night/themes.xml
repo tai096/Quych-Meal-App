@@ -9,9 +9,15 @@
     </style>
 
     <style name="ScreenQuychMeal"><item name="android:background">@color/darkMode</item></style>
+    <style name="BorderQuychMeal">
+        <item name="android:background">@color/white</item>
+    </style>
     <style name="TextQuychMeal"><item name="android:textColor">@color/white</item></style>
     <style name="IconQuychMeal"><item name="android:tint">@color/white</item></style>
     <style name="CustomIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/transparent</item>
+    </style>
+    <style name="CardQuychMeal">
+        <item name="android:backgroundTint">#424242</item>
     </style>
 </resources>
