@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".NotificationPublisher"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuychMeal"
         tools:targetApi="31">
+
+        <activity
+            android:name=".Activities.DetailRecipeActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.CookingActivity"
             android:exported="false" />
@@ -52,12 +55,6 @@
         <activity
             android:name=".Activities.MainActivity"
             android:exported="false" />
-
-        <service android:name=".MyFirebaseMessagingService" android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>
