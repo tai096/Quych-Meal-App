@@ -51,8 +51,8 @@ public class Food {
         this.categoryId = categoryId;
     }
 
-    public String getCookTime() {
-        return String.valueOf(cookTime);
+    public int getCookTime() {
+        return cookTime;
     }
 
     public void setCookTime(int cookTime) {
@@ -115,16 +115,16 @@ public class Food {
         this.name = name;
     }
 
-    public String getPrepTime() {
-        return String.valueOf(prepTime);
+    public int getPrepTime() {
+        return prepTime;
     }
 
     public void setPrepTime(int prepTime) {
         this.prepTime = prepTime;
     }
 
-    public String getServing() {
-        return String.valueOf(serving);
+    public int getServing() {
+        return serving;
     }
 
     public void setServing(int serving) {

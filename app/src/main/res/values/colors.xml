@@ -7,6 +7,7 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="hover">#37484848</color>
     <color name="darkMode">#151515</color>
+    <color name="transparentGrey">#80282828</color>
 
 
 </resources>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#95000000">
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:id="@+id/dialogFoodBox"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="15dp"
+      android:background="@color/white"
+      android:orientation="vertical">
+
+      <!-- NAME -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/nameInputTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Name: "
+          android:textSize="15dp"
+          android:textFontWeight="700"
+          android:hint="Food name"/>
+        <EditText
+          android:id="@+id/nameInputValue"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginVertical="5dp"
+          android:background="@drawable/search_view_bg"
+          android:hint="Food Name"
+          android:textSize="15dp"
+          android:paddingHorizontal="15dp"
+          android:inputType="text"/>
+      </LinearLayout>
+
+      <!-- INGREDIENTS -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/ingredientInputTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Ingredients: "
+          android:textSize="15dp"
+          android:textFontWeight="700"
+          android:hint="Food name"/>
+        <MultiAutoCompleteTextView
+          android:id="@+id/ingredientInputValue"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/search_view_bg"
+          android:layout_marginVertical="3dp"
+          android:padding="5dp"
+          android:hint="Select Ingredients"
+          android:textSize="15dp"
+          android:completionThreshold="1"
+          android:maxLines="3"
+          android:paddingStart="15dp"
+          />
+      </LinearLayout>
+
+      <!-- CATEGORIES -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/categoryInputTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Category: "
+          android:textSize="15dp"
+          android:textFontWeight="700"
+          android:hint="Food name"/>
+        <Spinner
+          android:id="@+id/categoryInputValue"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/search_view_bg"
+          android:layout_marginVertical="3dp"
+          android:padding="5dp"
+          />
+      </LinearLayout>
+
+      <!-- ABOUT -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/descriptionInputTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="About: "
+          android:textSize="15dp"
+          android:textFontWeight="700"
+          android:hint="Food name"/>
+        <EditText
+          android:id="@+id/descriptionInputValue"
+          android:layout_width="match_parent"
+          android:layout_height="80dp"
+          android:layout_marginVertical="5dp"
+          android:background="@drawable/search_view_bg"
+          android:hint="Description about food"
+          android:textSize="15dp"
+          android:paddingHorizontal="15dp"
+          android:inputType="text"/>
+      </LinearLayout>
+
+      <!-- METHOD -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/methodInputTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Method: "
+          android:textSize="15dp"
+          android:textFontWeight="700"
+          android:hint="Food name"/>
+        <EditText
+          android:id="@+id/methodInputValue"
+          android:layout_width="match_parent"
+          android:layout_height="80dp"
+          android:layout_marginVertical="5dp"
+          android:background="@drawable/search_view_bg"
+          android:hint="Cooking method"
+          android:textSize="15dp"
+          android:paddingHorizontal="15dp"
+          android:inputType="text"/>
+      </LinearLayout>
+
+      <!-- SERVING, PREP TIME & COOK TIME -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- SERVING -->
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:gravity="center"
+          android:padding="5dp">
+          <TextView
+            android:id="@+id/servingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Serving"
+            android:textSize="15dp"
+            android:textFontWeight="700"/>
+          <EditText
+            android:id="@+id/servingInputValue"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/search_view_bg"
+            android:layout_marginVertical="3dp"
+            android:padding="5dp"
+            android:inputType="number"/>
+        </LinearLayout>
+
+        <!-- PREP TIME -->
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:gravity="center"
+          android:padding="5dp">
+          <TextView
+            android:id="@+id/prepTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prep time"
+            android:textSize="15dp"
+            android:textFontWeight="700"/>
+          <EditText
+            android:id="@+id/prepTimeInputValue"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/search_view_bg"
+            android:layout_marginVertical="3dp"
+            android:padding="5dp"
+            android:inputType="number"/>
+        </LinearLayout>
+
+        <!-- COOK TIME -->
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:gravity="center"
+          android:padding="5dp">
+          <TextView
+            android:id="@+id/cookTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cook time"
+            android:textSize="15dp"
+            android:textFontWeight="700"/>
+          <EditText
+            android:id="@+id/cookTimeInputValue"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/search_view_bg"
+            android:layout_marginVertical="3dp"
+            android:padding="5dp"
+            android:inputType="number"/>
+        </LinearLayout>
+      </LinearLayout>
+
+
+      <!-- VIDEO -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/videoInputTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Video"
+          android:textSize="15dp"
+          android:textFontWeight="700"/>
+        <EditText
+          android:id="@+id/videoInputValue"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginVertical="5dp"
+          android:background="@drawable/search_view_bg"
+          android:hint="Youtube URL"
+          android:textSize="15dp"
+          android:paddingHorizontal="15dp"
+          android:inputType="text"/>
+      </LinearLayout>
+
+      <!-- IMAGE -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/imageInputTitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Image"
+          android:textSize="15dp"
+          android:textFontWeight="700"/>
+        <ImageView
+          android:id="@+id/imageInputValue"
+          android:layout_width="match_parent"
+          android:layout_height="150dp"
+          android:background="@drawable/search_view_bg"
+          android:layout_marginVertical="5dp"/>
+        <Button
+          android:id="@+id/imageAddBtn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/custom_button"
+          android:text="Add Image"
+          android:layout_marginVertical="5dp"/>
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
