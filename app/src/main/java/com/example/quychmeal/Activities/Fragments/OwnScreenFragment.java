@@ -272,15 +272,23 @@ LinearLayout notFoundRecipeView;
         TextView prepTimeInput = foodDialog.findViewById(R.id.prepTimeInputValue);
         TextView cookTimeInput = foodDialog.findViewById(R.id.cookTimeInputValue);
         TextView videoURL = foodDialog.findViewById(R.id.videoInputValue);
+        TextView levelInput = foodDialog.findViewById(R.id.levelInputValue);
 
         // Get selected data
         String saveName = nameInput.getText().toString();
         String saveAbout = aboutInput.getText().toString();
         String saveMethod = methodInput.getText().toString();
+        int saveLevel = Integer.parseInt(levelInput.getText().toString());
         int saveServing = Integer.parseInt(servingInput.getText().toString());
         int savePrep = Integer.parseInt(prepTimeInput.getText().toString());
         int saveCook = Integer.parseInt(cookTimeInput.getText().toString());
         String saveVideo = videoURL.getText().toString();
+
+        if (saveLevel > 5) {
+          saveLevel = 5;
+        } else if (saveLevel < 1) {
+          saveLevel = 1;
+        }
 
         // Get input ingredients
         List<FoodIngredient> ingredientList = new ArrayList<>();
@@ -311,7 +319,7 @@ LinearLayout notFoundRecipeView;
         String formattedVideoURL = youtubeEmbedUrl + videoId + "?si=yrKhxfGi4NHzaPrd\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
 
         // ADD DATA
-        uploadData(saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
+        uploadData(saveCate, saveCook, saveAbout, imageURI, ingredientList, saveLevel, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
       });
       builder.setNegativeButton("Cancel", (dialog, which) -> {
         Log.d("Count Ingredient", String.valueOf(ingredientContainer.getChildCount()));
@@ -333,6 +341,7 @@ LinearLayout notFoundRecipeView;
       TextView servingInputValue = dialogView.findViewById(R.id.servingInputValue);
       TextView prepTimeInputValue = dialogView.findViewById(R.id.prepTimeInputValue);
       TextView cookTimeInputValue = dialogView.findViewById(R.id.cookTimeInputValue);
+      TextView levelInputValue = dialogView.findViewById(R.id.levelInputValue);
       TextView videoInputValue = dialogView.findViewById(R.id.videoInputValue);
       ImageView imageInputValue = dialogView.findViewById(R.id.imageInputValue);
       Spinner cateInputValue = dialogView.findViewById(R.id.categoryInputValue);
@@ -344,6 +353,7 @@ LinearLayout notFoundRecipeView;
       servingInputValue.setText(String.valueOf(food.getServing()));
       prepTimeInputValue.setText(String.valueOf(food.getPrepTime()));
       cookTimeInputValue.setText(String.valueOf(food.getCookTime()));
+      levelInputValue.setText(String.valueOf(food.getLevel()));
       videoInputValue.setText(food.getVideo());
 
       // Set image
@@ -484,6 +494,7 @@ LinearLayout notFoundRecipeView;
         TextView nameInput = dialogView.findViewById(R.id.nameInputValue);
         Spinner cateInput = dialogView.findViewById(R.id.categoryInputValue);
         TextView aboutInput = dialogView.findViewById(R.id.descriptionInputValue);
+        TextView levelInput = dialogView.findViewById(R.id.levelInputValue);
         TextView methodInput = dialogView.findViewById(R.id.methodInputValue);
         TextView servingInput = dialogView.findViewById(R.id.servingInputValue);
         TextView prepTimeInput = dialogView.findViewById(R.id.prepTimeInputValue);
@@ -495,10 +506,17 @@ LinearLayout notFoundRecipeView;
         String saveName = nameInput.getText().toString();
         String saveAbout = aboutInput.getText().toString();
         String saveMethod = methodInput.getText().toString();
+        int saveLevel = Integer.parseInt(levelInput.getText().toString());
         int saveServing = Integer.parseInt(servingInput.getText().toString());
         int savePrep = Integer.parseInt(prepTimeInput.getText().toString());
         int saveCook = Integer.parseInt(cookTimeInput.getText().toString());
         String saveVideo = videoURL.getText().toString();
+
+        if (saveLevel > 5) {
+          saveLevel = 5;
+        } else if (saveLevel < 1) {
+          saveLevel = 1;
+        }
 
         // Get input ingredients
         List<FoodIngredient> ingredientList = new ArrayList<>();
@@ -529,7 +547,7 @@ LinearLayout notFoundRecipeView;
         String formattedVideoURL = youtubeEmbedUrl + videoId + "?si=yrKhxfGi4NHzaPrd\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
 
         // UPDATE DATA
-        updateData(food, saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
+        updateData(food, saveCate, saveCook, saveAbout, imageURI, ingredientList, saveLevel, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
 
       });
       builder.setNegativeButton("Cancel", (dialog, which) -> {
@@ -554,7 +572,7 @@ LinearLayout notFoundRecipeView;
     }
 
     // Methods to upload
-    private void uploadData(int saveCate, int saveCookTime, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrepTime, int saveServing, String formattedVideoURL) {
+    private void uploadData(int saveCate, int saveCookTime, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int saveLevel, String saveMethod, String saveName, int savePrepTime, int saveServing, String formattedVideoURL) {
       String randomKey = UUID.randomUUID().toString();
       final ProgressDialog progressDialog = new ProgressDialog(mContext);
       progressDialog.setTitle("Uploading Food...");
@@ -581,7 +599,7 @@ LinearLayout notFoundRecipeView;
                 @NonNull
                 @Override
                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                  Food newFood = new Food(newId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
+                  Food newFood = new Food(newId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, saveLevel, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
                   currentData.child(String.valueOf(newId)).setValue(newFood);
                   return Transaction.success(currentData);
                 }
@@ -607,7 +625,7 @@ LinearLayout notFoundRecipeView;
     }
 
     // Method to update
-    private void updateData(Food food, int saveCate, int saveCookTime, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrepTime, int saveServing, String formattedVideoURL) {
+    private void updateData(Food food, int saveCate, int saveCookTime, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int saveLevel, String saveMethod, String saveName, int savePrepTime, int saveServing, String formattedVideoURL) {
       String randomKey = UUID.randomUUID().toString();
       final ProgressDialog progressDialog = new ProgressDialog(mContext);
       progressDialog.setTitle("Updating Food...");
@@ -628,7 +646,7 @@ LinearLayout notFoundRecipeView;
                 @NonNull
                 @Override
                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                  Food newFood = new Food(currentId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
+                  Food newFood = new Food(currentId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, saveLevel, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
                   currentData.child(String.valueOf(currentId)).setValue(newFood);
                   return Transaction.success(currentData);
                 }

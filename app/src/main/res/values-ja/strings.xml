@@ -35,6 +35,7 @@
     <string name="cook">あな</string>
     <string name="make_your_own_food_stay_at_home">シピはありません\nあなたの</string>
     <string name="cooking_level">送信:</string>
+    <string name="enter_cooking_level">難易度を入力してください（1-5）</string>
     <string name="let_s_cook">本日のメ</string>
     <string name="creator">ュー:</string>
     <string name="welcome">ピはありま</string>

@@ -170,6 +170,34 @@
                     android:textSize="14dp" />
             </LinearLayout>
 
+            <!-- LEVEL -->
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+              <TextView
+                android:id="@+id/levelInputTitle"
+                style="@style/TextQuychMeal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cooking_level"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+              <EditText
+                android:id="@+id/levelInputValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/search_view_bg"
+                android:hint="@string/enter_cooking_level"
+                android:inputType="number"
+                android:maxLines="6"
+                android:padding="10dp"
+                android:textSize="14dp" />
+            </LinearLayout>
+
             <!-- SERVING, PREP TIME & COOK TIME -->
             <LinearLayout
                 android:layout_width="match_parent"

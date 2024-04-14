@@ -34,6 +34,7 @@
     <string name="cook">Cook</string>
     <string name="make_your_own_food_stay_at_home">Make your own food, stay at home</string>
     <string name="cooking_level">Cooking level:</string>
+    <string name="enter_cooking_level">Enter cooking level (1-5)</string>
     <string name="let_s_cook">Let\'s cook</string>
     <string name="creator">Creator:</string>
     <string name="welcome">Welcome to</string>
