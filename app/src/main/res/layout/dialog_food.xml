@@ -1,284 +1,326 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#95000000">
-  <ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ScreenQuychMeal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-      android:id="@+id/dialogFoodBox"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:padding="15dp"
-      android:background="@color/white"
-      android:orientation="vertical">
-
-      <!-- NAME -->
-      <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/nameInputTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Name: "
-          android:textSize="15dp"
-          android:textFontWeight="700"
-          android:hint="Food name"/>
-        <EditText
-          android:id="@+id/nameInputValue"
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:layout_marginVertical="5dp"
-          android:background="@drawable/search_view_bg"
-          android:hint="Food Name"
-          android:textSize="15dp"
-          android:paddingHorizontal="15dp"
-          android:inputType="text"/>
-      </LinearLayout>
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-      <!-- INGREDIENT -->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/ingredientInputTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Ingredients: "
-          android:textSize="15dp"
-          android:textFontWeight="700"/>
         <LinearLayout
-          android:id="@+id/ingredientContainer"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-        </LinearLayout>
-
-
-      </LinearLayout>
-
-      <Button
-        android:id="@+id/addIngredientBtn"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:text="Add Ingredient"
-        android:textSize="11dp"
-        android:textFontWeight="700"
-        android:background="@drawable/custom_button"
-        android:layout_marginVertical="5dp"/>
-
-      <!-- CATEGORIES -->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/categoryInputTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Category: "
-          android:textSize="15dp"
-          android:textFontWeight="700"
-          android:hint="Food name"/>
-        <Spinner
-          android:id="@+id/categoryInputValue"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@drawable/search_view_bg"
-          android:layout_marginVertical="3dp"
-          android:padding="5dp"
-          />
-      </LinearLayout>
-
-      <!-- ABOUT -->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/descriptionInputTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="About: "
-          android:textSize="15dp"
-          android:textFontWeight="700"
-          android:hint="Food name"/>
-        <EditText
-          android:id="@+id/descriptionInputValue"
-          android:layout_width="match_parent"
-          android:layout_height="80dp"
-          android:layout_marginVertical="5dp"
-          android:background="@drawable/search_view_bg"
-          android:hint="Description about food"
-          android:textSize="15dp"
-          android:paddingHorizontal="15dp"
-          android:inputType="text"/>
-      </LinearLayout>
-
-      <!-- METHOD -->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/methodInputTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Method: "
-          android:textSize="15dp"
-          android:textFontWeight="700"
-          android:hint="Food name"/>
-        <EditText
-          android:id="@+id/methodInputValue"
-          android:layout_width="match_parent"
-          android:layout_height="80dp"
-          android:layout_marginVertical="5dp"
-          android:background="@drawable/search_view_bg"
-          android:hint="Cooking method"
-          android:textSize="15dp"
-          android:paddingHorizontal="15dp"
-          android:inputType="text"/>
-      </LinearLayout>
-
-      <!-- SERVING, PREP TIME & COOK TIME -->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- SERVING -->
-        <LinearLayout
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:gravity="center"
-          android:padding="5dp">
-          <TextView
-            android:id="@+id/servingTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Serving"
-            android:textSize="15dp"
-            android:textFontWeight="700"/>
-          <EditText
-            android:id="@+id/servingInputValue"
+            android:id="@+id/dialogFoodBox"
+            style="@style/ScreenQuychMeal"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/search_view_bg"
-            android:layout_marginVertical="3dp"
-            android:padding="5dp"
-            android:inputType="number"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <!-- NAME -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameInputTitle"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Food name"
+                    android:text="@string/name"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/nameInputValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/search_view_bg"
+                    android:hint="Food Name"
+                    android:inputType="text"
+                    android:paddingHorizontal="15dp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <!-- INGREDIENT -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ingredientInputTitle"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ingredients_food"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/ingredientContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addIngredientBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/custom_button"
+                android:text="@string/add_ingredient"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <!-- CATEGORIES -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/categoryInputTitle"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Food name"
+                    android:text="@string/category"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/categoryInputValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="3dp"
+                    android:background="@drawable/search_view_bg"
+                    android:padding="5dp" />
+            </LinearLayout>
+
+            <!-- ABOUT -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/descriptionInputTitle"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Food name"
+                    android:text="@string/about"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/descriptionInputValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/search_view_bg"
+                    android:hint="@string/description_about_food"
+                    android:inputType="text"
+                    android:maxLines="6"
+                    android:padding="10dp"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <!-- METHOD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/methodInputTitle"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Food name"
+                    android:text="@string/method_food"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/methodInputValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/search_view_bg"
+                    android:hint="@string/cooking_method"
+                    android:inputType="text"
+                    android:maxLines="6"
+                    android:padding="10dp"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <!-- SERVING, PREP TIME & COOK TIME -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- SERVING -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/servingTitle"
+                        style="@style/TextQuychMeal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/servings"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/servingInputValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="3dp"
+                        android:background="@drawable/search_view_bg"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <!-- PREP TIME -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/prepTimeTitle"
+                        style="@style/TextQuychMeal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/prep"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/prepTimeInputValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="3dp"
+                        android:background="@drawable/search_view_bg"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <!-- COOK TIME -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/cookTimeTitle"
+                        style="@style/TextQuychMeal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cook time"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/cookTimeInputValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="3dp"
+                        android:background="@drawable/search_view_bg"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!-- VIDEO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/videoInputTitle"
+                    style="@style/TextQuychMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tutorial_video"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/videoInputValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/search_view_bg"
+                    android:hint="@string/youtube_url"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <!-- IMAGE -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/imageInputTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Image"
+                    android:textFontWeight="700"
+                    android:textSize="15dp" />
+
+                <ImageView
+                    android:id="@+id/imageInputValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/search_view_bg" />
+
+                <Button
+                    android:id="@+id/imageAddBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:text="@string/add_image"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-
-        <!-- PREP TIME -->
-        <LinearLayout
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:gravity="center"
-          android:padding="5dp">
-          <TextView
-            android:id="@+id/prepTimeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prep time"
-            android:textSize="15dp"
-            android:textFontWeight="700"/>
-          <EditText
-            android:id="@+id/prepTimeInputValue"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/search_view_bg"
-            android:layout_marginVertical="3dp"
-            android:padding="5dp"
-            android:inputType="number"/>
-        </LinearLayout>
-
-        <!-- COOK TIME -->
-        <LinearLayout
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:gravity="center"
-          android:padding="5dp">
-          <TextView
-            android:id="@+id/cookTimeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cook time"
-            android:textSize="15dp"
-            android:textFontWeight="700"/>
-          <EditText
-            android:id="@+id/cookTimeInputValue"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/search_view_bg"
-            android:layout_marginVertical="3dp"
-            android:padding="5dp"
-            android:inputType="number"/>
-        </LinearLayout>
-      </LinearLayout>
-
-
-      <!-- VIDEO -->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/videoInputTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Video"
-          android:textSize="15dp"
-          android:textFontWeight="700"/>
-        <EditText
-          android:id="@+id/videoInputValue"
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:layout_marginVertical="5dp"
-          android:background="@drawable/search_view_bg"
-          android:hint="Youtube URL"
-          android:textSize="15dp"
-          android:paddingHorizontal="15dp"
-          android:inputType="text"/>
-      </LinearLayout>
-
-      <!-- IMAGE -->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:id="@+id/imageInputTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Image"
-          android:textSize="15dp"
-          android:textFontWeight="700"/>
-        <ImageView
-          android:id="@+id/imageInputValue"
-          android:layout_width="match_parent"
-          android:layout_height="150dp"
-          android:background="@drawable/search_view_bg"
-          android:layout_marginVertical="5dp"/>
-        <Button
-          android:id="@+id/imageAddBtn"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@drawable/custom_button"
-          android:text="Add Image"
-          android:layout_marginVertical="5dp"/>
-      </LinearLayout>
-    </LinearLayout>
-  </ScrollView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

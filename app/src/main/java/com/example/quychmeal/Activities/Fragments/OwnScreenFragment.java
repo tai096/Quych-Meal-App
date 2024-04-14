@@ -78,7 +78,7 @@ public class OwnScreenFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageURI;
     private ImageView selectedImage;
-
+LinearLayout notFoundRecipeView;
     public OwnScreenFragment() {
     }
 
@@ -98,6 +98,8 @@ public class OwnScreenFragment extends Fragment {
 
         // RecyclerView (Own Recipe List)
         RecyclerView foodRecyclerView = view.findViewById(R.id.ownFoodRecyclerView);
+      notFoundRecipeView = view.findViewById(R.id.notFoundRecipeView);
+      notFoundRecipeView.setVisibility(View.GONE);
         foodRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 1));
         foodListAdapter = new OwnFoodAdapter(foodList, new OwnFoodAdapter.OnItemClickListener() {
           @Override
@@ -163,6 +165,13 @@ public class OwnScreenFragment extends Fragment {
             foodList.add(food);
           }
           foodListAdapter.notifyDataSetChanged();
+
+          if (foodList.isEmpty()) {
+            notFoundRecipeView.setVisibility(View.VISIBLE);
+          } else {
+            notFoundRecipeView.setVisibility(View.GONE);
+
+          }
         }
         @Override
         public void onCancelled(@NonNull DatabaseError error) {

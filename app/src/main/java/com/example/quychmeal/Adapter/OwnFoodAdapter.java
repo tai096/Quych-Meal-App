@@ -72,9 +72,9 @@ public class OwnFoodAdapter extends RecyclerView.Adapter<OwnFoodAdapter.ViewHold
     Food food = foodList.get(position);
     holder.foodName.setText(food.getName());
     Glide.with(holder.itemView.getContext()).load(food.getImage()).transform(new CenterCrop(), new RoundedCorners(10)).into(holder.foodImg);
-    holder.foodPrepTime.setText(food.getPrepTime() + "hrs");
-    holder.foodServing.setText(food.getServing() + "pp");
-    holder.foodCookTime.setText(food.getCookTime() + "hrs");
+    holder.foodPrepTime.setText(food.getPrepTime() + "m");
+    holder.foodServing.setText(food.getServing() + "p");
+    holder.foodCookTime.setText(food.getCookTime() + "m");
 
     // Click listener for delete
     holder.binIcon.setOnClickListener(view -> {

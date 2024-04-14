@@ -17,6 +17,8 @@ import com.example.quychmeal.Activities.DetailRecipeActivity;
 import com.example.quychmeal.Models.Food;
 import com.example.quychmeal.Models.Ingredient;
 import com.example.quychmeal.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 

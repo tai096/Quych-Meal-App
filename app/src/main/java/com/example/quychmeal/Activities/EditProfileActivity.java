@@ -163,7 +163,7 @@ public class EditProfileActivity extends RootActivity {
                 User userProfile = snapshot.getValue(User.class);
 
                 editTxtName.setText(userProfile.getUsername());
-                editTxtAge.setText(userProfile.getAge());
+                editTxtAge.setText(String.valueOf(userProfile.getAge()));
                 String profileImageUrl = userProfile.getAvatar();
 
                 if (!isFinishing() && profileImageUrl != null && !profileImageUrl.isEmpty()) {

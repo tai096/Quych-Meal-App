@@ -38,8 +38,8 @@ public class User {
         return password;
     }
 
-    public String getAge() {
-        return String.valueOf(age);
+    public int getAge() {
+        return age;
     }
 
     public String getSex() {

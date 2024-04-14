@@ -1,122 +1,135 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical"
-  android:background="@drawable/ur_food_item"
-  android:padding="20dp"
-  android:elevation="10dp"
-  android:layout_margin="20dp"
-  >
-
-  <ImageView
-    android:id="@+id/foodImg"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:scaleType="centerCrop"
-    android:src="@drawable/background_login"
-    />
-
-  <TextView
-    android:id="@+id/foodName"
+    style="@style/Card2QuychMeal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="FoodName"
-    android:textSize="20dp"
-    android:textFontWeight="700"
-    android:textColor="@android:color/black"
-    android:layout_marginVertical="10dp"
-    />
+    android:layout_margin="20dp"
+    android:elevation="10dp"
 
-  <LinearLayout
-    android:id="@+id/foodBasicInfo"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:baselineAligned="false"
-    android:background="@drawable/ur_border_top_and_bottom"
-    android:layout_marginBottom="15dp">
-    <LinearLayout
-      android:id="@+id/serving"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:gravity="center"
-      android:background="@drawable/ur_border_right">
-      <TextView
-        android:id="@+id/titleServing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Servings"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textFontWeight="500"/>
-      <TextView
-        android:id="@+id/servingValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="8pp"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textFontWeight="600"
-        />
-    </LinearLayout>
-    <LinearLayout
-      android:id="@+id/prep"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:gravity="center"
-      android:background="@drawable/ur_border_right">
-      <TextView
-        android:id="@+id/titlePrep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Prep"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textFontWeight="500"/>
-      <TextView
-        android:id="@+id/prepValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3hrs"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textFontWeight="600"
-        />
-    </LinearLayout>
-    <LinearLayout
-      android:id="@+id/cook"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:gravity="center">
-      <TextView
-        android:id="@+id/titleCook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cook"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textFontWeight="500"/>
-      <TextView
-        android:id="@+id/cookValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2hrs"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textFontWeight="600"
-        />
-    </LinearLayout>
-  </LinearLayout>
+    android:orientation="vertical"
+    android:padding="20dp">
 
-  <ImageView
-    android:id="@+id/bin"
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:src="@drawable/ic_bin"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="end">
+
+        <ImageView
+            android:id="@+id/bin"
+            style="@style/IconQuychMeal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_bin" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/foodImg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_login" />
+
+    <TextView
+        android:id="@+id/foodName"
+        style="@style/TextQuychMeal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="FoodName"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/foodBasicInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/ur_border_top_and_bottom"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/serving"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ur_border_right"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleServing"
+                style="@style/TextQuychMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/servings"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/servingValue"
+                style="@style/TextQuychMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8p"
+                android:textSize="15dp"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/prep"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ur_border_right"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titlePrep"
+                style="@style/TextQuychMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prep"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/prepValue"
+                style="@style/TextQuychMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3hrs"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cook"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleCook"
+                style="@style/TextQuychMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cook"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cookValue"
+                style="@style/TextQuychMeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2hrs"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
 </LinearLayout>

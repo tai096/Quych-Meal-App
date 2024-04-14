@@ -36,6 +36,20 @@
     <string name="cooking_level">Cooking level:</string>
     <string name="let_s_cook">Let\'s cook</string>
     <string name="creator">Creator:</string>
+    <string name="welcome">Welcome to</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="you_don_t_have_any_recipes_nlet_s_create_now">You don\'t have any recipes.\nLet\'s create now!</string>
+    <string name="no_foods_found">No foods found</string>
+    <string name="name">Name:</string>
+    <string name="ingredients_food">Ingredients Food:</string>
+    <string name="add_ingredient">Add Ingredient</string>
+    <string name="category">Category:</string>
+    <string name="about">About:</string>
+    <string name="description_about_food">Description about food</string>
+    <string name="method_food">Method:</string>
+    <string name="cooking_method">Cooking method</string>
+    <string name="youtube_url">Youtube URL</string>
+    <string name="add_image">Add Image</string>
 
     <string-array name="sex_options">
         <item>male</item>

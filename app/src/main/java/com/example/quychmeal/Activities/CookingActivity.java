@@ -7,6 +7,7 @@ import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class CookingActivity extends RootActivity {
     ArrayList<FoodIngredient> foodIngredients;
     FoodIngredientsAdapter foodIngredientsAdapter;
     WebView video;
+ImageButton btnCookingBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,9 @@ public class CookingActivity extends RootActivity {
 
         }
 
+        btnCookingBack.setOnClickListener(v -> {
+            CookingActivity.this.finish();
+        });
     }
 
 
@@ -86,11 +91,7 @@ public class CookingActivity extends RootActivity {
                 Food food = snapshot.getValue(Food.class);
                 String foodMethodText = food.getMethod();
 
-                // Split the foodMethod string into lines based on "Step"
-                String[] steps = foodMethodText.split("STEP");
-                // Join the steps array with newline characters, starting from the second element
-                String formattedSteps = "Step" + String.join("\n\nStep", Arrays.copyOfRange(steps, 1, steps.length));
-                foodMethod.setText(formattedSteps);
+                foodMethod.setText(foodMethodText);
 
                 String foodImage = food.getImage();
                 if (!isFinishing() && foodImage != null && !foodImage.isEmpty()) {

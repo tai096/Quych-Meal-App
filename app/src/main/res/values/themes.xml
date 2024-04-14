@@ -32,4 +32,8 @@
     <style name="CardQuychMeal">
         <item name="android:backgroundTint">#F6F6F6</item>
     </style>
+
+    <style name="Card2QuychMeal">
+        <item name="android:background">#F6F6F6</item>
+    </style>
 </resources>
