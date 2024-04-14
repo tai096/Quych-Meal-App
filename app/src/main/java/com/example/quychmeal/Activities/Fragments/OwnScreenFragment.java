@@ -36,6 +36,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -305,12 +307,26 @@ public class OwnScreenFragment extends Fragment {
             idReceived = snapshot.getKey();
           }
           int id = Integer.parseInt(idReceived);
+          int newId = id + 1;
 
-          Food newFood = new Food(id++, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
-          foodListReference.child(String.valueOf(id)).setValue(newFood);
-          Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
-          foodListAdapter.notifyDataSetChanged();
-          cateNames.clear();
+          foodListReference.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+              Food newFood = new Food(newId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
+              currentData.child(String.valueOf(newId)).setValue(newFood);
+              return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+              if (committed) {
+                Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
+                foodListAdapter.notifyDataSetChanged();
+                cateNames.clear();
+              }
+            }
+          });
         }
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
