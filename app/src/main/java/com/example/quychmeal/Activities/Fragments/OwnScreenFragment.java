@@ -105,6 +105,7 @@ public class OwnScreenFragment extends Fragment {
         return view;
     }
 
+    // Method to get recipe list
     private void getRecipe() {
       String currentUserId = pref.getString("userId", null);
       assert currentUserId != null;
@@ -324,6 +325,7 @@ public class OwnScreenFragment extends Fragment {
                 Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
                 foodListAdapter.notifyDataSetChanged();
                 cateNames.clear();
+                reloadFragment();
               }
             }
           });
@@ -345,5 +347,13 @@ public class OwnScreenFragment extends Fragment {
         videoId = matcher.group();
       }
       return videoId;
+    }
+
+    // Method to reload whenever saved
+    private void reloadFragment() {
+      foodList.clear();
+      foodListAdapter.notifyDataSetChanged();
+      OwnScreenFragment fragment = new OwnScreenFragment();
+      requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.own_screen_fragment, fragment).commit();
     }
 }
