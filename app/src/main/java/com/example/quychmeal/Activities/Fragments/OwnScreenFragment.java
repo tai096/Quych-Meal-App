@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.quychmeal.Adapter.OwnFoodAdapter;
 import com.example.quychmeal.Models.Food;
 import com.example.quychmeal.R;
@@ -46,6 +47,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -83,7 +85,7 @@ public class OwnScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate layout for this fragment
         View view = inflater.inflate(R.layout.fragment_own_screen, container, false);
         mContext = getContext();
 
@@ -96,7 +98,7 @@ public class OwnScreenFragment extends Fragment {
           @Override
           public void onItemClick(int position) {
             Food food = foodList.get(position);
-            Log.d("Result", "Show food details");
+            showFoodDetail(food);
           }
 
           @Override
@@ -191,8 +193,6 @@ public class OwnScreenFragment extends Fragment {
         public void onCancelled(@NonNull DatabaseError error) {
         }
       });
-
-
 
       addIngredientBtn.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -310,12 +310,120 @@ public class OwnScreenFragment extends Fragment {
       alertDialog.show();
     }
 
+    // Method to show dialog with food details
+    private void showFoodDetail(Food food) {
+      View dialogView = getLayoutInflater().inflate(R.layout.dialog_food, null);
+
+      // Initialize views
+      TextView nameInputValue = dialogView.findViewById(R.id.nameInputValue);
+      TextView descriptionInputValue = dialogView.findViewById(R.id.descriptionInputValue);
+      TextView methodInputValue = dialogView.findViewById(R.id.methodInputValue);
+      TextView servingInputValue = dialogView.findViewById(R.id.servingInputValue);
+      TextView prepTimeInputValue = dialogView.findViewById(R.id.prepTimeInputValue);
+      TextView cookTimeInputValue = dialogView.findViewById(R.id.cookTimeInputValue);
+      TextView videoInputValue = dialogView.findViewById(R.id.videoInputValue);
+      ImageView imageInputValue = dialogView.findViewById(R.id.imageInputValue);
+      Button addImgBtn = dialogView.findViewById(R.id.imageAddBtn);
+      Spinner cateInputValue = dialogView.findViewById(R.id.categoryInputValue);
+
+      // Set value
+      nameInputValue.setText(food.getName());
+      descriptionInputValue.setText(food.getDescription());
+      methodInputValue.setText(food.getMethod());
+      servingInputValue.setText(String.valueOf(food.getServing()));
+      prepTimeInputValue.setText(String.valueOf(food.getPrepTime()));
+      cookTimeInputValue.setText(String.valueOf(food.getCookTime()));
+      videoInputValue.setText(food.getVideo());
+
+      // Set image
+      Glide.with(requireContext()).load(food.getImage()).into(imageInputValue);
+      addImgBtn.setText("Change Image");
+      addImgBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+          intent.setType("image/*");
+          startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        }
+      });
+
+      // Set ingredients
+      LinearLayout ingredientContainer = dialogView.findViewById(R.id.ingredientContainer);
+      DatabaseReference ingredientRef = FirebaseDatabase.getInstance().getReference("foods").child(String.valueOf(food.getId())).child("ingredients");
+      ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+          for (DataSnapshot ingredientSnapShot : snapshot.getChildren()) {
+            String ingredientName = ingredientSnapShot.child("name").getValue(String.class);
+            String quantity = ingredientSnapShot.child("quantity").getValue(String.class);
+
+            View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_input_layout, null);
+            Spinner ingredientSpinner = ingredientView.findViewById(R.id.ingredientSpinner);
+            EditText quantityEditText = ingredientView.findViewById(R.id.quantityEditText);
+            Button deleteIngredientBtn = ingredientView.findViewById(R.id.deleteIngredientBtn);
+
+            // Setter
+            ArrayAdapter<String> ingredientAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, Arrays.asList(ingredientName));
+            ingredientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ingredientSpinner.setAdapter(ingredientAdapter);
+            quantityEditText.setText(quantity);
+
+            ingredientContainer.addView(ingredientView);
+          }
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+          Log.e("Error", String.valueOf(error));
+        }
+      });
+
+      // Set category
+      DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories");
+      categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+          List<String> cateNames = new ArrayList<>();
+          for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+            String cateName = categorySnapshot.child("name").getValue(String.class);
+            cateNames.add(cateName);
+          }
+          ArrayAdapter<String> cateAdapter = new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_item, cateNames);
+          cateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+          cateInputValue.setAdapter(cateAdapter);
+
+          // Set default
+          cateInputValue.setSelection(food.getCategoryId());
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+      });
+
+      AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+      builder.setView(dialogView);
+      builder.setPositiveButton("OK", (dialog, which) -> {
+        // Do something if needed when the user clicks OK
+      });
+      builder.setNegativeButton("Cancel", (dialog, which) -> {
+        dialog.dismiss();
+      });
+      AlertDialog alertDialog = builder.create();
+      alertDialog.show();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
       super.onActivityResult(requestCode, resultCode, data);
       if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
         imageURI = data.getData();
-        selectedImage.setImageURI(imageURI);
+        if (selectedImage != null) {
+          selectedImage.setImageURI(imageURI);
+        }
+        else {
+          Log.e("OwnScreenFragment", "selectedImage is null");
+        }
       }
     }
 
@@ -421,8 +529,18 @@ public class OwnScreenFragment extends Fragment {
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-
+          Log.d("Error", String.valueOf(error));
         }
       });
+    }
+
+    // Method to get category name
+    private String getCategoryName(String categoryId) {
+      for (String categoryName : categoryMap.keySet()) {
+        if (categoryMap.get(categoryName).equals(categoryId)) {
+          return categoryName;
+        }
+      }
+      return null;
     }
 }
