@@ -13,6 +13,10 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="BorderQuychMeal">
+        <item name="android:background">@color/darkMode</item>
+    </style>
+
     <style name="TextQuychMeal">
         <item name="android:textColor">@color/darkMode</item>
     </style>
@@ -25,4 +29,7 @@
         <item name="android:color">@color/transparent</item>
     </style>
 
+    <style name="CardQuychMeal">
+        <item name="android:backgroundTint">#F6F6F6</item>
+    </style>
 </resources>

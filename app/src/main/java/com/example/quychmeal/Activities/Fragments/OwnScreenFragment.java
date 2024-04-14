@@ -137,7 +137,7 @@ public class OwnScreenFragment extends Fragment {
             DataSnapshot ingredients = foodSnapshot.child("ingredients");
             for (DataSnapshot ingredient : ingredients.getChildren()) {
               String ingredientId = ingredient.getKey();
-              ingredientList.add(new FoodIngredient(Integer.parseInt(ingredientId), ""));
+              ingredientList.add(new FoodIngredient(Integer.parseInt(ingredientId), "", ""));
             }
 
             Food food = new Food(id, cateId, cookTime, currentUserId, description, image, ingredientList, level, method, foodName, prepTime, serving, video);
@@ -205,13 +205,10 @@ public class OwnScreenFragment extends Fragment {
       // Add image
       Button addImageBtn = foodDialog.findViewById(R.id.imageAddBtn);
       selectedImage = foodDialog.findViewById(R.id.imageInputValue);
-      addImageBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-          intent.setType("image/*");
-          startActivityForResult(intent, PICK_IMAGE_REQUEST);
-        }
+      addImageBtn.setOnClickListener(v -> {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
       });
 
       // Show the Dialog
@@ -245,7 +242,7 @@ public class OwnScreenFragment extends Fragment {
         for (String ingredientName : ingredientNames) {
           if (ingredientMap.containsKey(ingredientName)) {
             String ingredientId = ingredientMap.get(ingredientName);
-            FoodIngredient foodIngredient = new FoodIngredient(Integer.parseInt(ingredientId), "");
+            FoodIngredient foodIngredient = new FoodIngredient(Integer.parseInt(ingredientId), "", "");
             ingredientList.add(foodIngredient);
           }
         }
