@@ -92,7 +92,18 @@ public class OwnScreenFragment extends Fragment {
         // RecyclerView (Own Recipe List)
         RecyclerView foodRecyclerView = view.findViewById(R.id.ownFoodRecyclerView);
         foodRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 1));
-        foodListAdapter = new OwnFoodAdapter(foodList);
+        foodListAdapter = new OwnFoodAdapter(foodList, new OwnFoodAdapter.OnItemClickListener() {
+          @Override
+          public void onItemClick(int position) {
+            Food food = foodList.get(position);
+            Log.d("Result", "Show food details");
+          }
+
+          @Override
+          public void onDeleteClick(int position) {
+            deleteFood(position);
+          }
+        });
         foodRecyclerView.setAdapter(foodListAdapter);
 
         // Add new recipe
@@ -103,6 +114,7 @@ public class OwnScreenFragment extends Fragment {
             showDialog();
           }
         });
+
 
         getRecipe();
         return view;
@@ -383,5 +395,34 @@ public class OwnScreenFragment extends Fragment {
       foodListAdapter.notifyDataSetChanged();
       OwnScreenFragment fragment = new OwnScreenFragment();
       requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.own_screen_fragment, fragment).commit();
+    }
+
+    // Method to delete food
+    private void deleteFood(int pos) {
+      Food deleteFood = foodList.get(pos);
+      String currentUserId = pref.getString("userId", null);
+      DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("foods");
+      foodRef.orderByChild("id").equalTo(deleteFood.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+          for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+            String createdby = dataSnapshot.child("createdBy").getValue(String.class);
+            if (createdby != null && createdby.equals(currentUserId)) {
+              dataSnapshot.getRef().removeValue();
+              foodList.remove(pos);
+              foodListAdapter.notifyItemRemoved(pos);
+              Toast.makeText(mContext, "Food deleted successfully!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+              Toast.makeText(mContext, "You don't have permission to delete this food", Toast.LENGTH_SHORT).show();
+            }
+          }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+      });
     }
 }
