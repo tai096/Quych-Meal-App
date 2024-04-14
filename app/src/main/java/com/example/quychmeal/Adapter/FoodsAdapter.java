@@ -41,9 +41,9 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         Food food = foodList.get(position);
         Glide.with(context).load(food.getImage()).transform(new CenterCrop(), new RoundedCorners(30)).into(holder.foodImg);
         holder.foodName.setText(food.getName());
-        holder.foodServing.setText(food.getServing());
-        holder.foodCookTime.setText(food.getCookTime());
-        holder.foodPrepTime.setText(food.getPrepTime());
+        holder.foodServing.setText(String.valueOf(food.getServing()));
+        holder.foodCookTime.setText(String.valueOf(food.getCookTime()));
+        holder.foodPrepTime.setText(String.valueOf(food.getPrepTime()));
     }
 
     public void setFoodList(List<Food> foodList) {

@@ -46,7 +46,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OwnScreenFragment extends Fragment {
     private String mParam1;
@@ -110,16 +113,31 @@ public class OwnScreenFragment extends Fragment {
           for (DataSnapshot foodSnapshot : snapshot.getChildren()) {
             int cateId = foodSnapshot.child("categoryId").getValue(Integer.class);
             int cookTime = foodSnapshot.child("cookTime").getValue(Integer.class);
+            int prepTime = foodSnapshot.child("prepTime").getValue(Integer.class);
+            int serving = foodSnapshot.child("serving").getValue(Integer.class);
             String description = foodSnapshot.child("description").getValue(String.class);
             int id = foodSnapshot.child("id").getValue(Integer.class);
             String image = foodSnapshot.child("image").getValue(String.class);
             int level = foodSnapshot.child("level").getValue(Integer.class);
             String method = foodSnapshot.child("method").getValue(String.class);
             String foodName = foodSnapshot.child("name").getValue(String.class);
-            int prepTime = foodSnapshot.child("prepTime").getValue(Integer.class);
-            int serving = foodSnapshot.child("serving").getValue(Integer.class);
 
-            Food food = new Food(id, cateId, cookTime, currentUserId, description, image, null, level, method, foodName, prepTime, serving, null);
+//            Food food = foodSnapshot.getValue(Food.class);
+//            foodList.add(food);
+
+            String videoEmbedded = foodSnapshot.child("video").getValue(String.class);
+            String videoId = extractVideoId(videoEmbedded);
+            String video = "https://www.youtube.com/watch?v=" + videoId;
+
+            // Retrieve ingredients
+            List<FoodIngredient> ingredientList = new ArrayList<>();
+            DataSnapshot ingredients = foodSnapshot.child("ingredients");
+            for (DataSnapshot ingredient : ingredients.getChildren()) {
+              String ingredientId = ingredient.getKey();
+              ingredientList.add(new FoodIngredient(Integer.parseInt(ingredientId), ""));
+            }
+
+            Food food = new Food(id, cateId, cookTime, currentUserId, description, image, ingredientList, level, method, foodName, prepTime, serving, video);
             foodList.add(food);
           }
           foodListAdapter.notifyDataSetChanged();
@@ -130,6 +148,7 @@ public class OwnScreenFragment extends Fragment {
       });
     }
 
+    // Method to setup and show Dialog
     private void showDialog() {
       View foodDialog = getLayoutInflater().inflate(R.layout.dialog_food, null);
       Spinner cateSpinner = foodDialog.findViewById(R.id.categoryInputValue);
@@ -257,6 +276,7 @@ public class OwnScreenFragment extends Fragment {
       }
     }
 
+    // Methods to upload food's data to Firebase
     private void uploadImage(int saveCate, int saveCook, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrep, int saveServing, String formattedVideoURL) {
       String randomKey = UUID.randomUUID().toString();
       final ProgressDialog progressDialog = new ProgressDialog(mContext);
@@ -280,10 +300,12 @@ public class OwnScreenFragment extends Fragment {
       foodListReference.orderByChild("id").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-          int id = 0;
+          String idReceived = "0";
           for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-            id = snapshot.child("id").getValue(Integer.class);
+            idReceived = snapshot.getKey();
           }
+          int id = Integer.parseInt(idReceived);
+
           Food newFood = new Food(id++, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
           foodListReference.child(String.valueOf(id)).setValue(newFood);
           Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
@@ -295,5 +317,17 @@ public class OwnScreenFragment extends Fragment {
           Log.d("Error", String.valueOf(error));
         }
       });
+    }
+
+    // Method to extract Video's id
+    private String extractVideoId(String url) {
+      String videoId = null;
+      String pattern = "(?<=embed\\/|watch\\?v=|\\/videos\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed\\%2Fvideos\\%2F|youtu.be%2F|v%2F)[^#\\&\\?\\n]*";
+      Pattern compiledPattern = Pattern.compile(pattern);
+      Matcher matcher = compiledPattern.matcher(url);
+      if (matcher.find()) {
+        videoId = matcher.group();
+      }
+      return videoId;
     }
 }

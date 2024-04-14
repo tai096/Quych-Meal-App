@@ -242,7 +242,7 @@
           android:layout_height="40dp"
           android:layout_marginVertical="5dp"
           android:background="@drawable/search_view_bg"
-          android:hint="Video URL"
+          android:hint="Youtube URL"
           android:textSize="15dp"
           android:paddingHorizontal="15dp"
           android:inputType="text"/>
