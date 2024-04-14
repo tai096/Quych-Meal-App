@@ -31,6 +31,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.quychmeal.Adapter.OwnFoodAdapter;
 import com.example.quychmeal.Models.Food;
 import com.example.quychmeal.R;
@@ -47,6 +51,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -323,7 +328,6 @@ public class OwnScreenFragment extends Fragment {
       TextView cookTimeInputValue = dialogView.findViewById(R.id.cookTimeInputValue);
       TextView videoInputValue = dialogView.findViewById(R.id.videoInputValue);
       ImageView imageInputValue = dialogView.findViewById(R.id.imageInputValue);
-
       Spinner cateInputValue = dialogView.findViewById(R.id.categoryInputValue);
 
       // Set value
@@ -337,6 +341,19 @@ public class OwnScreenFragment extends Fragment {
 
       // Set image
       Glide.with(requireContext()).load(food.getImage()).into(imageInputValue);
+      Glide.with(requireContext()).downloadOnly().load(food.getImage()).listener(new RequestListener<File>() {
+        @Override
+        public boolean onLoadFailed(@Nullable GlideException e, @Nullable Object model, @NonNull Target<File> target, boolean isFirstResource) {
+          return false;
+        }
+
+        @Override
+        public boolean onResourceReady(@NonNull File resource, @NonNull Object model, Target<File> target, @NonNull DataSource dataSource, boolean isFirstResource) {
+          imageURI = Uri.fromFile(resource);
+          selectedImage.setImageURI(imageURI);
+          return true;
+        }
+      }).submit();
       selectedImage = dialogView.findViewById(R.id.imageInputValue);
       Button addImgBtn = dialogView.findViewById(R.id.imageAddBtn);
       addImgBtn.setText("Change Image");
@@ -384,7 +401,6 @@ public class OwnScreenFragment extends Fragment {
           Log.e("Error", String.valueOf(error));
         }
       });
-
       Button addIngredientBtn = dialogView.findViewById(R.id.addIngredientBtn);
       addIngredientBtn.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -465,6 +481,7 @@ public class OwnScreenFragment extends Fragment {
         TextView prepTimeInput = dialogView.findViewById(R.id.prepTimeInputValue);
         TextView cookTimeInput = dialogView.findViewById(R.id.cookTimeInputValue);
         TextView videoURL = dialogView.findViewById(R.id.videoInputValue);
+        ImageView image = dialogView.findViewById(R.id.imageInputValue);
 
         // Get selected data
         String saveName = nameInput.getText().toString();
@@ -607,7 +624,6 @@ public class OwnScreenFragment extends Fragment {
                   currentData.child(String.valueOf(currentId)).setValue(newFood);
                   return Transaction.success(currentData);
                 }
-
                 @Override
                 public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
                   if (committed) {
