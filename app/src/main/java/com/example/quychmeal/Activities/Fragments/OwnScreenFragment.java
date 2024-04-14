@@ -221,6 +221,7 @@ LinearLayout notFoundRecipeView;
           ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+              ingredients.clear();
               for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
                 String ingredientId = ingredientSnapshot.getKey();
                 String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
@@ -421,6 +422,7 @@ LinearLayout notFoundRecipeView;
           ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+              ingredients.clear();
               for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
                 String ingredientId = ingredientSnapshot.getKey();
                 String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
