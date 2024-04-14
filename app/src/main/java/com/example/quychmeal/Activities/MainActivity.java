@@ -1,13 +1,21 @@
 package com.example.quychmeal.Activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -33,6 +41,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +50,7 @@ public class MainActivity extends RootActivity {
     ActivityMainBinding binding;
     SharedPreferences pref;
     private static final String SHARED_PREF_NAME = "mypref";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +58,7 @@ public class MainActivity extends RootActivity {
 
         setContentView(binding.getRoot());
 
-        pref = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+        pref = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         binding.bottomNavigationView.setBackground(null);
 
@@ -75,10 +85,13 @@ public class MainActivity extends RootActivity {
         }
     }
 
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
+
+
 }
