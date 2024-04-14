@@ -243,13 +243,10 @@ public class OwnScreenFragment extends Fragment {
       // Add image
       Button addImageBtn = foodDialog.findViewById(R.id.imageAddBtn);
       selectedImage = foodDialog.findViewById(R.id.imageInputValue);
-      addImageBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-          intent.setType("image/*");
-          startActivityForResult(intent, PICK_IMAGE_REQUEST);
-        }
+      addImageBtn.setOnClickListener(v -> {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
       });
 
       // Show the Dialog

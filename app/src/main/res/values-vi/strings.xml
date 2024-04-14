@@ -29,6 +29,11 @@
     <string name="ingredients">Ingredients</string>
     <string name="method">Method</string>
     <string name="tutorial_video">Tutorial Video</string>
+    <string name="try_now">Try now</string>
+    <string name="servings">Servings</string>
+    <string name="prep">Prep</string>
+    <string name="cook">Cook</string>
+    <string name="make_your_own_food_stay_at_home">Make your own food, stay at home</string>
 
     <string-array name="sex_options">
         <item>nam</item>
