@@ -41,4 +41,22 @@
         <item>Japanese</item>
     </string-array>
 
+    <!-- OWN PROFILE PAGE -->
+    <string name="my_recipes">My Recipes</string>
+    <string name="serving">Servings</string>
+    <string name="prepTime">Prep</string>
+    <string name="cookTime">Cook</string>
+    <string name="foodName">Name</string>
+    <string name="category">Category</string>
+    <string name="about">About</string>
+    <string name="video">Video</string>
+    <string name="image">Image</string>
+    <string name="change_image">Change Image</string>
+    <string name="add_image">Add Image</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_ingredients">Add Ingredient</string>
+    <string name="description_about_food">Description about food</string>
+    <string name="cooking_method">Cooking method</string>
+
 </resources>

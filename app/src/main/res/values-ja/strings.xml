@@ -42,4 +42,21 @@
         <item>日本語</item>
     </string-array>
 
+    <string name="my_recipes">私のレシピ</string>
+    <string name="serving">提供</string>
+    <string name="prepTime">準備</string>
+    <string name="cookTime">調理</string>
+    <string name="foodName">名前</string>
+    <string name="category">カテゴリ</string>
+    <string name="about">紹介</string>
+    <string name="video">ビデオ</string>
+    <string name="image">画像</string>
+    <string name="change_image">画像を変更</string>
+    <string name="add_image">画像を追加</string>
+    <string name="delete">削除</string>
+    <string name="cancel">キャンセル</string>
+    <string name="add_ingredients">材料を追加</string>
+    <string name="description_about_food">食べ物の説明</string>
+    <string name="cooking_method">調理方法</string>
+
 </resources>

@@ -212,6 +212,7 @@ public class OwnScreenFragment extends Fragment {
           ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+              ingredients.clear();
               for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
                 String ingredientId = ingredientSnapshot.getKey();
                 String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
@@ -255,7 +256,7 @@ public class OwnScreenFragment extends Fragment {
       // Show the Dialog
       AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
       builder.setView(foodDialog);
-      builder.setPositiveButton("Save", (dialog, which) -> {
+      builder.setPositiveButton(getString(R.string.save), (dialog, which) -> {
         // Retrieve input data from user
         TextView nameInput = foodDialog.findViewById(R.id.nameInputValue);
         Spinner cateInput = foodDialog.findViewById(R.id.categoryInputValue);
@@ -306,8 +307,8 @@ public class OwnScreenFragment extends Fragment {
         // ADD DATA
         uploadData(saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
       });
-      builder.setNegativeButton("Cancel", (dialog, which) -> {
-        Log.d("Count Ingredient", String.valueOf(ingredientContainer.getChildCount()));
+      builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+        ingredientMap.clear();
         cateNames.clear();
         dialog.dismiss();
       });
@@ -346,7 +347,6 @@ public class OwnScreenFragment extends Fragment {
         public boolean onLoadFailed(@Nullable GlideException e, @Nullable Object model, @NonNull Target<File> target, boolean isFirstResource) {
           return false;
         }
-
         @Override
         public boolean onResourceReady(@NonNull File resource, @NonNull Object model, Target<File> target, @NonNull DataSource dataSource, boolean isFirstResource) {
           imageURI = Uri.fromFile(resource);
@@ -356,7 +356,7 @@ public class OwnScreenFragment extends Fragment {
       }).submit();
       selectedImage = dialogView.findViewById(R.id.imageInputValue);
       Button addImgBtn = dialogView.findViewById(R.id.imageAddBtn);
-      addImgBtn.setText("Change Image");
+      addImgBtn.setText(getString(R.string.change_image));
       addImgBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -415,6 +415,7 @@ public class OwnScreenFragment extends Fragment {
           ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+              ingredients.clear();
               for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
                 String ingredientId = ingredientSnapshot.getKey();
                 String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
@@ -471,7 +472,7 @@ public class OwnScreenFragment extends Fragment {
 
       AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
       builder.setView(dialogView);
-      builder.setPositiveButton("Save", (dialog, which) -> {
+      builder.setPositiveButton(getString(R.string.save), (dialog, which) -> {
         // Retrieve input data from user
         TextView nameInput = dialogView.findViewById(R.id.nameInputValue);
         Spinner cateInput = dialogView.findViewById(R.id.categoryInputValue);
@@ -524,7 +525,8 @@ public class OwnScreenFragment extends Fragment {
         updateData(food, saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
 
       });
-      builder.setNegativeButton("Cancel", (dialog, which) -> {
+      builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+        cateNames.clear();
         dialog.dismiss();
       });
       AlertDialog alertDialog = builder.create();

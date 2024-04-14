@@ -26,9 +26,9 @@
     <string name="get_recipes">Tìm công thức</string>
     <string name="recipes_of_the_day">Thực đơn hôm nay</string>
     <string name="no_recipes_are_matching_your_ingredients">Không có công thức nào cho nguyên liệu của bạn!</string>
-    <string name="ingredients">Ingredients</string>
-    <string name="method">Method</string>
-    <string name="tutorial_video">Tutorial Video</string>
+    <string name="ingredients">Nguyên liệu</string>
+    <string name="method">Cách nấu</string>
+    <string name="tutorial_video">Video hướng dẫn</string>
 
     <string-array name="sex_options">
         <item>nam</item>
@@ -41,5 +41,22 @@
         <item>Tiếng anh</item>
         <item>Tiếng nhật</item>
     </string-array>
+
+    <string name="my_recipes">Món của tôi</string>
+    <string name="serving">Phục vụ</string>
+    <string name="prepTime">Chuẩn bị</string>
+    <string name="cookTime">Nấu</string>
+    <string name="foodName">Tên món</string>
+    <string name="category">Danh mục</string>
+    <string name="about">Thông tin</string>
+    <string name="video">Video</string>
+    <string name="image">Hình ảnh</string>
+    <string name="change_image">Đổi ảnh</string>
+    <string name="add_image">Thêm ảnh</string>
+    <string name="delete">Xóa</string>
+    <string name="cancel">Huỷ</string>
+    <string name="add_ingredients">Thêm nguyên liệu</string>
+    <string name="description_about_food">Mô tả về món ăn</string>
+    <string name="cooking_method">Phương pháp nấu nướng</string>
 
 </resources>

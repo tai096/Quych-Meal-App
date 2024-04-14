@@ -20,7 +20,7 @@
     android:id="@+id/foodName"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="FoodName"
+    android:text="@string/foodName"
     android:textSize="20dp"
     android:textFontWeight="700"
     android:textColor="@android:color/black"
@@ -47,7 +47,7 @@
         android:id="@+id/titleServing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Servings"
+        android:text="@string/serving"
         android:textSize="15dp"
         android:textColor="@color/black"
         android:textFontWeight="500"/>
@@ -73,7 +73,7 @@
         android:id="@+id/titlePrep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prep"
+        android:text="@string/prepTime"
         android:textSize="15dp"
         android:textColor="@color/black"
         android:textFontWeight="500"/>
@@ -98,7 +98,7 @@
         android:id="@+id/titleCook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cook"
+        android:text="@string/cookTime"
         android:textSize="15dp"
         android:textColor="@color/black"
         android:textFontWeight="500"/>
