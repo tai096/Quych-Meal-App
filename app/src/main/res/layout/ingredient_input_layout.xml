@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:gravity="center">
+
+  <!-- Spinner for ingredient selection -->
+  <Spinner
+    android:id="@+id/ingredientSpinner"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="30dp"
+    android:background="@drawable/search_view_bg"
+    android:layout_marginRight="5dp"
+    android:paddingHorizontal="5dp"/>
+
+  <!-- EditText for quantity input -->
+  <EditText
+    android:id="@+id/quantityEditText"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="30dp"
+    android:background="@drawable/search_view_bg"
+    android:hint="Quantity"
+    android:textSize="10dp"
+    android:layout_marginRight="5dp"
+    android:paddingHorizontal="5dp"/>
+
+  <!-- Button to delete the ingredient -->
+  <Button
+    android:id="@+id/deleteIngredientBtn"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="40dp"
+    android:text="Delete"
+    android:textSize="10dp"
+    />
+</LinearLayout>

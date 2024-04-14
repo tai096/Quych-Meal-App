@@ -22,7 +22,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +60,7 @@ public class OwnScreenFragment extends Fragment {
     private String mParam2;
     private List<Food> foodList = new ArrayList<>();
     private List<String> cateNames = new ArrayList<>();
+    private List<String> ingredients = new ArrayList<>();
     private HashMap<String, String> ingredientMap = new HashMap<>();
     private HashMap<String, String> categoryMap = new HashMap<>();
     private ArrayAdapter<String> spinnerAdapter;
@@ -125,9 +128,6 @@ public class OwnScreenFragment extends Fragment {
             String method = foodSnapshot.child("method").getValue(String.class);
             String foodName = foodSnapshot.child("name").getValue(String.class);
 
-//            Food food = foodSnapshot.getValue(Food.class);
-//            foodList.add(food);
-
             String videoEmbedded = foodSnapshot.child("video").getValue(String.class);
             String videoId = extractVideoId(videoEmbedded);
             String video = "https://www.youtube.com/watch?v=" + videoId;
@@ -137,7 +137,7 @@ public class OwnScreenFragment extends Fragment {
             DataSnapshot ingredients = foodSnapshot.child("ingredients");
             for (DataSnapshot ingredient : ingredients.getChildren()) {
               String ingredientId = ingredient.getKey();
-              ingredientList.add(new FoodIngredient(Integer.parseInt(ingredientId), ""));
+              ingredientList.add(new FoodIngredient(Integer.parseInt(ingredientId), "", ""));
             }
 
             Food food = new Food(id, cateId, cookTime, currentUserId, description, image, ingredientList, level, method, foodName, prepTime, serving, video);
@@ -155,6 +155,8 @@ public class OwnScreenFragment extends Fragment {
     private void showDialog() {
       View foodDialog = getLayoutInflater().inflate(R.layout.dialog_food, null);
       Spinner cateSpinner = foodDialog.findViewById(R.id.categoryInputValue);
+      LinearLayout ingredientContainer = foodDialog.findViewById(R.id.ingredientContainer);
+      Button addIngredientBtn = foodDialog.findViewById(R.id.addIngredientBtn);
 
       // Add content to cateSpinner
       DatabaseReference cateListReference = FirebaseDatabase.getInstance().getReference("categories");
@@ -178,27 +180,46 @@ public class OwnScreenFragment extends Fragment {
         }
       });
 
-      // Add content to ingredientSpinner
-      DatabaseReference ingredientRef = FirebaseDatabase.getInstance().getReference("ingredients");
-      ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+      addIngredientBtn.setOnClickListener(new View.OnClickListener() {
         @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-          for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
-            String ingredientId = ingredientSnapshot.getKey();
-            String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
-            if (ingredientName != null) {
-              ingredientMap.put(ingredientName, ingredientId);
+        public void onClick(View v) {
+          View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_input_layout, null);
+          Spinner ingredientSpinner = ingredientView.findViewById(R.id.ingredientSpinner);
+          EditText quantityEditText = ingredientView.findViewById(R.id.quantityEditText);
+          Button deleteIngredient = ingredientView.findViewById(R.id.deleteIngredientBtn);
+
+          // Populate data into categorySpinner
+          DatabaseReference ingredientRef = FirebaseDatabase.getInstance().getReference("ingredients");
+          ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+              for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                String ingredientId = ingredientSnapshot.getKey();
+                String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
+                if (ingredientName != null) {
+                  ingredients.add(ingredientName);
+                  ingredientMap.put(ingredientName, ingredientId);
+                }
+              }
+              spinnerAdapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_ingredient_layout, ingredients);
+              spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+              ingredientSpinner.setAdapter(spinnerAdapter);
             }
-          }
-          MultiAutoCompleteTextView ingredientTemp = foodDialog.findViewById(R.id.ingredientInputValue);
-          List<String> ingredientList = new ArrayList<>(ingredientMap.keySet());
-          ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,  android.R.layout.simple_dropdown_item_1line, ingredientList);
-          ingredientTemp.setAdapter(adapter);
-          ingredientTemp.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-          Log.d("Error", String.valueOf(error));
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+          });
+
+          // Add listener for delete ingredient
+          deleteIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              ingredientContainer.removeView(ingredientView);
+            }
+          });
+          ingredientContainer.addView(ingredientView);
         }
       });
 
@@ -218,9 +239,8 @@ public class OwnScreenFragment extends Fragment {
       AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
       builder.setView(foodDialog);
       builder.setPositiveButton("Save", (dialog, which) -> {
-        // Retrieve the input data from user
+        // Retrieve input data from user
         TextView nameInput = foodDialog.findViewById(R.id.nameInputValue);
-        MultiAutoCompleteTextView ingredientInput = foodDialog.findViewById(R.id.ingredientInputValue);
         Spinner cateInput = foodDialog.findViewById(R.id.categoryInputValue);
         TextView aboutInput = foodDialog.findViewById(R.id.descriptionInputValue);
         TextView methodInput = foodDialog.findViewById(R.id.methodInputValue);
@@ -231,7 +251,6 @@ public class OwnScreenFragment extends Fragment {
 
         // Get selected data
         String saveName = nameInput.getText().toString();
-        String saveIngredients = ingredientInput.getText().toString();
         String saveAbout = aboutInput.getText().toString();
         String saveMethod = methodInput.getText().toString();
         int saveServing = Integer.parseInt(servingInput.getText().toString());
@@ -239,13 +258,21 @@ public class OwnScreenFragment extends Fragment {
         int saveCook = Integer.parseInt(cookTimeInput.getText().toString());
         String saveVideo = videoURL.getText().toString();
 
-        // Set Ingredient ID
-        List<String> ingredientNames = Arrays.asList(saveIngredients.split("\\s*,\\s*"));
+        // Get input ingredients
         List<FoodIngredient> ingredientList = new ArrayList<>();
-        for (String ingredientName : ingredientNames) {
+        for (int i = 0; i < ingredientContainer.getChildCount(); i++) {
+          View ingredientView = ingredientContainer.getChildAt(i);
+          Spinner ingredientSpinner = ingredientView.findViewById(R.id.ingredientSpinner);
+          EditText quantityEditText = ingredientView.findViewById(R.id.quantityEditText);
+
+          // Get selected ingredients
+          String ingredientName = ingredientSpinner.getSelectedItem().toString();
+          String quantity = quantityEditText.getText().toString();
+
+          // Add FoodIngredient to ingredientList
           if (ingredientMap.containsKey(ingredientName)) {
             String ingredientId = ingredientMap.get(ingredientName);
-            FoodIngredient foodIngredient = new FoodIngredient(Integer.parseInt(ingredientId), "");
+            FoodIngredient foodIngredient = new FoodIngredient(Integer.parseInt(ingredientId), quantity, ingredientName);
             ingredientList.add(foodIngredient);
           }
         }
@@ -263,6 +290,7 @@ public class OwnScreenFragment extends Fragment {
         uploadImage(saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
       });
       builder.setNegativeButton("Cancel", (dialog, which) -> {
+        Log.d("Count Ingredient", String.valueOf(ingredientContainer.getChildCount()));
         cateNames.clear();
         dialog.dismiss();
       });
