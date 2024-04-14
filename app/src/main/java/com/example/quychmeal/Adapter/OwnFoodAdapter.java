@@ -30,8 +30,9 @@ public class OwnFoodAdapter extends RecyclerView.Adapter<OwnFoodAdapter.ViewHold
   }
 
   // Constructor
-  public OwnFoodAdapter(List<Food> foodList) {
+  public OwnFoodAdapter(List<Food> foodList, OnItemClickListener listener) {
     this.foodList = foodList;
+    this.listener = listener;
   }
 
   // ViewHolder class
@@ -94,7 +95,6 @@ public class OwnFoodAdapter extends RecyclerView.Adapter<OwnFoodAdapter.ViewHold
         }
       }
     });
-
   }
 
   @Override

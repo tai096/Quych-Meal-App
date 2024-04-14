@@ -40,7 +40,7 @@
           android:inputType="text"/>
       </LinearLayout>
 
-      <!-- INGREDIENTS -->
+      <!-- INGREDIENT -->
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,22 +51,27 @@
           android:layout_height="wrap_content"
           android:text="Ingredients: "
           android:textSize="15dp"
-          android:textFontWeight="700"
-          android:hint="Food name"/>
-        <MultiAutoCompleteTextView
-          android:id="@+id/ingredientInputValue"
+          android:textFontWeight="700"/>
+        <LinearLayout
+          android:id="@+id/ingredientContainer"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@drawable/search_view_bg"
-          android:layout_marginVertical="3dp"
-          android:padding="5dp"
-          android:hint="Select Ingredients"
-          android:textSize="15dp"
-          android:completionThreshold="1"
-          android:maxLines="3"
-          android:paddingStart="15dp"
-          />
+          android:orientation="vertical">
+
+        </LinearLayout>
+
+
       </LinearLayout>
+
+      <Button
+        android:id="@+id/addIngredientBtn"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="Add Ingredient"
+        android:textSize="11dp"
+        android:textFontWeight="700"
+        android:background="@drawable/custom_button"
+        android:layout_marginVertical="5dp"/>
 
       <!-- CATEGORIES -->
       <LinearLayout
