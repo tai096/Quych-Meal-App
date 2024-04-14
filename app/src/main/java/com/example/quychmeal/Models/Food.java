@@ -1,8 +1,8 @@
 package com.example.quychmeal.Models;
-
+import java.io.Serializable;
 import java.util.List;
 
-public class Food {
+public class Food implements Serializable{
     private int id;
     private int categoryId;
     private int cookTime;

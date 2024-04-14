@@ -34,6 +34,9 @@
     <string name="prep">Prep</string>
     <string name="cook">Cook</string>
     <string name="make_your_own_food_stay_at_home">Make your own food, stay at home</string>
+    <string name="cooking_level">Cooking level:</string>
+    <string name="let_s_cook">Let\'s cook</string>
+    <string name="creator">Creator:</string>
 
     <string-array name="sex_options">
         <item>nam</item>

@@ -3,10 +3,12 @@
 package com.example.quychmeal.Activities.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.quychmeal.Activities.DetailRecipeActivity;
+import com.example.quychmeal.Activities.GeneratedRecipeActivity;
 import com.example.quychmeal.Adapter.CategoriesAdapter;
 import com.example.quychmeal.Adapter.ReipeAdapter;
 import com.example.quychmeal.Models.Category;
@@ -66,6 +70,10 @@ public class HomeScreenFragment extends Fragment implements CategoriesAdapter.Ca
         gridView = view.findViewById(R.id.foodGridView);
         notFoundFoods = view.findViewById(R.id.notFoundFoods);
         notFoundFoods.setVisibility(View.GONE);
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

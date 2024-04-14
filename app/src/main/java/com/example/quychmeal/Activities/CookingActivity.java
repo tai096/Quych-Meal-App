@@ -1,6 +1,7 @@
 package com.example.quychmeal.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebChromeClient;
@@ -38,13 +39,13 @@ import java.util.Arrays;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class CookingActivity extends RootActivity {
+    private String foodId;
     GridView foodIngredientGridView;
     TextView foodMethod;
     ImageView foodBackground;
     ArrayList<FoodIngredient> foodIngredients;
     FoodIngredientsAdapter foodIngredientsAdapter;
     WebView video;
-    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("foods").child("0");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +68,18 @@ public class CookingActivity extends RootActivity {
         foodIngredientsAdapter = new FoodIngredientsAdapter(foodIngredients, this);
         foodIngredientGridView.setAdapter(foodIngredientsAdapter);
 
-        handleGetFood();
+        Intent intent = getIntent();
+        if (intent != null) {
+            foodId = intent.getStringExtra("foodId");
+            handleGetFood(foodId);
+
+        }
 
     }
 
 
-    private void handleGetFood() {
+    private void handleGetFood(String foodId) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("foods").child(foodId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
