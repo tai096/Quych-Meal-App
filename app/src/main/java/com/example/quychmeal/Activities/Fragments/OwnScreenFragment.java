@@ -299,7 +299,7 @@ public class OwnScreenFragment extends Fragment {
         String formattedVideoURL = youtubeEmbedUrl + videoId + "?si=yrKhxfGi4NHzaPrd\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
 
         // ADD DATA
-        uploadImage(saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
+        uploadData(saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
       });
       builder.setNegativeButton("Cancel", (dialog, which) -> {
         Log.d("Count Ingredient", String.valueOf(ingredientContainer.getChildCount()));
@@ -323,7 +323,7 @@ public class OwnScreenFragment extends Fragment {
       TextView cookTimeInputValue = dialogView.findViewById(R.id.cookTimeInputValue);
       TextView videoInputValue = dialogView.findViewById(R.id.videoInputValue);
       ImageView imageInputValue = dialogView.findViewById(R.id.imageInputValue);
-      Button addImgBtn = dialogView.findViewById(R.id.imageAddBtn);
+
       Spinner cateInputValue = dialogView.findViewById(R.id.categoryInputValue);
 
       // Set value
@@ -337,12 +337,14 @@ public class OwnScreenFragment extends Fragment {
 
       // Set image
       Glide.with(requireContext()).load(food.getImage()).into(imageInputValue);
+      selectedImage = dialogView.findViewById(R.id.imageInputValue);
+      Button addImgBtn = dialogView.findViewById(R.id.imageAddBtn);
       addImgBtn.setText("Change Image");
       addImgBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
           Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-          intent.setType("image/*");
+          intent.setType("image/**");
           startActivityForResult(intent, PICK_IMAGE_REQUEST);
         }
       });
@@ -368,6 +370,12 @@ public class OwnScreenFragment extends Fragment {
             ingredientSpinner.setAdapter(ingredientAdapter);
             quantityEditText.setText(quantity);
 
+            deleteIngredientBtn.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                ingredientContainer.removeView(ingredientView);
+              }
+            });
             ingredientContainer.addView(ingredientView);
           }
         }
@@ -377,15 +385,59 @@ public class OwnScreenFragment extends Fragment {
         }
       });
 
+      Button addIngredientBtn = dialogView.findViewById(R.id.addIngredientBtn);
+      addIngredientBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_input_layout, null);
+          Spinner ingredientSpinner = ingredientView.findViewById(R.id.ingredientSpinner);
+          EditText quantityEditText = ingredientView.findViewById(R.id.quantityEditText);
+          Button deleteIngredient = ingredientView.findViewById(R.id.deleteIngredientBtn);
+
+          // Populate data into categorySpinner
+          DatabaseReference ingredientRef = FirebaseDatabase.getInstance().getReference("ingredients");
+          ingredientRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+              for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                String ingredientId = ingredientSnapshot.getKey();
+                String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
+                if (ingredientName != null) {
+                  ingredients.add(ingredientName);
+                  ingredientMap.put(ingredientName, ingredientId);
+                }
+              }
+              spinnerAdapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_ingredient_layout, ingredients);
+              spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+              ingredientSpinner.setAdapter(spinnerAdapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+          });
+
+          // Add listener for delete ingredient
+          deleteIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              ingredientContainer.removeView(ingredientView);
+            }
+          });
+          ingredientContainer.addView(ingredientView);
+        }
+      });
+
       // Set category
       DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories");
       categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
           List<String> cateNames = new ArrayList<>();
-          for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-            String cateName = categorySnapshot.child("name").getValue(String.class);
+          for (DataSnapshot cateSnapshot : snapshot.getChildren()) {
+            String cateName = cateSnapshot.child("name").getValue(String.class);
+            String cateId = cateSnapshot.getKey();
             cateNames.add(cateName);
+            categoryMap.put(cateName, cateId);
           }
           ArrayAdapter<String> cateAdapter = new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_item, cateNames);
           cateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -403,8 +455,57 @@ public class OwnScreenFragment extends Fragment {
 
       AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
       builder.setView(dialogView);
-      builder.setPositiveButton("OK", (dialog, which) -> {
-        // Do something if needed when the user clicks OK
+      builder.setPositiveButton("Save", (dialog, which) -> {
+        // Retrieve input data from user
+        TextView nameInput = dialogView.findViewById(R.id.nameInputValue);
+        Spinner cateInput = dialogView.findViewById(R.id.categoryInputValue);
+        TextView aboutInput = dialogView.findViewById(R.id.descriptionInputValue);
+        TextView methodInput = dialogView.findViewById(R.id.methodInputValue);
+        TextView servingInput = dialogView.findViewById(R.id.servingInputValue);
+        TextView prepTimeInput = dialogView.findViewById(R.id.prepTimeInputValue);
+        TextView cookTimeInput = dialogView.findViewById(R.id.cookTimeInputValue);
+        TextView videoURL = dialogView.findViewById(R.id.videoInputValue);
+
+        // Get selected data
+        String saveName = nameInput.getText().toString();
+        String saveAbout = aboutInput.getText().toString();
+        String saveMethod = methodInput.getText().toString();
+        int saveServing = Integer.parseInt(servingInput.getText().toString());
+        int savePrep = Integer.parseInt(prepTimeInput.getText().toString());
+        int saveCook = Integer.parseInt(cookTimeInput.getText().toString());
+        String saveVideo = videoURL.getText().toString();
+
+        // Get input ingredients
+        List<FoodIngredient> ingredientList = new ArrayList<>();
+        for (int i = 0; i < ingredientContainer.getChildCount(); i++) {
+          View ingredientView = ingredientContainer.getChildAt(i);
+          Spinner ingredientSpinner = ingredientView.findViewById(R.id.ingredientSpinner);
+          EditText quantityEditText = ingredientView.findViewById(R.id.quantityEditText);
+
+          // Get selected ingredients
+          String ingredientName = ingredientSpinner.getSelectedItem().toString();
+          String quantity = quantityEditText.getText().toString();
+
+          // Add FoodIngredient to ingredientList
+          if (ingredientMap.containsKey(ingredientName)) {
+            String ingredientId = ingredientMap.get(ingredientName);
+            FoodIngredient foodIngredient = new FoodIngredient(Integer.parseInt(ingredientId), quantity, ingredientName);
+            ingredientList.add(foodIngredient);
+          }
+        }
+
+        // Set Category
+        String selectedCategoryName = cateInput.getSelectedItem().toString();
+        int saveCate = Integer.parseInt(categoryMap.get(selectedCategoryName));
+
+        // Set VideoURL
+        String youtubeEmbedUrl = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/";
+        String videoId = saveVideo.substring(saveVideo.lastIndexOf("=") + 1);
+        String formattedVideoURL = youtubeEmbedUrl + videoId + "?si=yrKhxfGi4NHzaPrd\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+
+        // UPDATE DATA
+        updateData(food, saveCate, saveCook, saveAbout, imageURI, ingredientList, 1, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
+
       });
       builder.setNegativeButton("Cancel", (dialog, which) -> {
         dialog.dismiss();
@@ -427,61 +528,103 @@ public class OwnScreenFragment extends Fragment {
       }
     }
 
-    // Methods to upload food's data to Firebase
-    private void uploadImage(int saveCate, int saveCook, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrep, int saveServing, String formattedVideoURL) {
+    // Methods to upload
+    private void uploadData(int saveCate, int saveCookTime, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrepTime, int saveServing, String formattedVideoURL) {
       String randomKey = UUID.randomUUID().toString();
       final ProgressDialog progressDialog = new ProgressDialog(mContext);
       progressDialog.setTitle("Uploading Food...");
       progressDialog.show();
-
       StorageReference reference = FirebaseStorage.getInstance().getReference().child("food/" + randomKey);
 
       reference.putFile(imageURI).addOnSuccessListener(taskSnapshot -> {
         progressDialog.dismiss();
         reference.getDownloadUrl().addOnSuccessListener(uri -> {
           String imageURL = uri.toString();
-          addFoodToDatabase(saveCate, saveCook, saveAbout, imageURL, ingredientList, level, saveMethod, saveName, savePrep, saveServing, formattedVideoURL);
+          String currentUserId = pref.getString("userId", null);
+          DatabaseReference foodListReference = FirebaseDatabase.getInstance().getReference("foods");
+          foodListReference.orderByChild("id").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              String idReceived = "0";
+              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                idReceived = snapshot.getKey();
+              }
+              int id = Integer.parseInt(idReceived);
+              int newId = id + 1;
+
+              foodListReference.runTransaction(new Transaction.Handler() {
+                @NonNull
+                @Override
+                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                  Food newFood = new Food(newId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
+                  currentData.child(String.valueOf(newId)).setValue(newFood);
+                  return Transaction.success(currentData);
+                }
+
+                @Override
+                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                  if (committed) {
+                    Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
+                    foodListAdapter.notifyDataSetChanged();
+                    cateNames.clear();
+                    reloadFragment();
+                  }
+                }
+              });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+              Log.d("Error", String.valueOf(error));
+            }
+          });
         });
       });
     }
 
-    private void addFoodToDatabase(int saveCate, int saveCookTime, String saveAbout,  String imageURL, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrepTime, int saveServing, String formattedVideoURL) {
-      String currentUserId = pref.getString("userId", null);
-      DatabaseReference foodListReference = FirebaseDatabase.getInstance().getReference("foods");
-      foodListReference.orderByChild("id").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-          String idReceived = "0";
-          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-            idReceived = snapshot.getKey();
-          }
-          int id = Integer.parseInt(idReceived);
-          int newId = id + 1;
+    // Method to update
+    private void updateData(Food food, int saveCate, int saveCookTime, String saveAbout,  Uri imageURI, List<FoodIngredient> ingredientList, int level, String saveMethod, String saveName, int savePrepTime, int saveServing, String formattedVideoURL) {
+      String randomKey = UUID.randomUUID().toString();
+      final ProgressDialog progressDialog = new ProgressDialog(mContext);
+      progressDialog.setTitle("Updating Food...");
+      progressDialog.show();
+      StorageReference reference = FirebaseStorage.getInstance().getReference().child("food/" + randomKey);
 
-          foodListReference.runTransaction(new Transaction.Handler() {
-            @NonNull
+      reference.putFile(imageURI).addOnSuccessListener(taskSnapshot -> {
+        progressDialog.dismiss();
+        reference.getDownloadUrl().addOnSuccessListener(uri -> {
+          String imageURL = uri.toString();
+          String currentUserId = pref.getString("userId", null);
+          DatabaseReference foodListReference = FirebaseDatabase.getInstance().getReference("foods");
+          foodListReference.orderByChild("id").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-              Food newFood = new Food(newId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
-              currentData.child(String.valueOf(newId)).setValue(newFood);
-              return Transaction.success(currentData);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              int currentId = food.getId();
+              foodListReference.runTransaction(new Transaction.Handler() {
+                @NonNull
+                @Override
+                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                  Food newFood = new Food(currentId, saveCate, saveCookTime, currentUserId, saveAbout, imageURL, ingredientList, 1, saveMethod, saveName, savePrepTime, saveServing, formattedVideoURL);
+                  currentData.child(String.valueOf(currentId)).setValue(newFood);
+                  return Transaction.success(currentData);
+                }
+
+                @Override
+                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                  if (committed) {
+                    Toast.makeText(getActivity(), "Recipe has been updated", Toast.LENGTH_SHORT).show();
+                    foodListAdapter.notifyDataSetChanged();
+                    cateNames.clear();
+                    reloadFragment();
+                  }
+                }
+              });
             }
-
             @Override
-            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-              if (committed) {
-                Toast.makeText(getActivity(), "Recipe has been added", Toast.LENGTH_SHORT).show();
-                foodListAdapter.notifyDataSetChanged();
-                cateNames.clear();
-                reloadFragment();
-              }
+            public void onCancelled(@NonNull DatabaseError error) {
+              Log.d("Error", String.valueOf(error));
             }
           });
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-          Log.d("Error", String.valueOf(error));
-        }
+        });
       });
     }
 
@@ -532,15 +675,5 @@ public class OwnScreenFragment extends Fragment {
           Log.d("Error", String.valueOf(error));
         }
       });
-    }
-
-    // Method to get category name
-    private String getCategoryName(String categoryId) {
-      for (String categoryName : categoryMap.keySet()) {
-        if (categoryMap.get(categoryName).equals(categoryId)) {
-          return categoryName;
-        }
-      }
-      return null;
     }
 }
