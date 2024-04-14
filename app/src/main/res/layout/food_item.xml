@@ -6,10 +6,10 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="3dp"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="10dp">
 
     <LinearLayout
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
@@ -19,6 +19,7 @@
             android:id="@+id/foodImg"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            app:cornerRadius="9.78sp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -28,11 +29,13 @@
             android:paddingVertical="2dp"
             android:textSize="20sp"
             android:text="name"
+            android:textStyle="bold"
             android:textAlignment="center" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/border_linear_layout_food_item"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -45,15 +48,17 @@
                     android:id="@+id/titleServing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/border_textview_food_item"
                     android:layout_weight="1"
                     android:textAlignment="center"
                     android:text="Servings" />
 
                 <TextView
                     android:id="@+id/servingValue"
+                    android:background="@drawable/border_textview_food_item"
                     android:layout_width="match_parent"
                     android:textAlignment="center"
-
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1p" />
@@ -69,15 +74,16 @@
                     android:id="@+id/titlePrep"
                     android:layout_width="match_parent"
                     android:textAlignment="center"
-
+                    android:background="@drawable/border_textview_food_item"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Prep" />
 
                 <TextView
                     android:id="@+id/prepValue"
+                    android:background="@drawable/border_textview_food_item"
                     android:textAlignment="center"
-
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -102,11 +108,45 @@
                     android:id="@+id/cookValue"
                     android:layout_width="match_parent"
                     android:textAlignment="center"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="20m" />
             </LinearLayout>
-
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/foodLevel"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/nunito_bold"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:layout_marginStart="12sp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentStart="true"/>
+
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50sp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="17dp"
+                android:layout_marginEnd="9dp"
+                android:layout_toEndOf="@+id/foodLevel"
+                android:text="Check"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/nunito_bold"
+
+
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
